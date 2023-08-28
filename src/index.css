@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Varela+Round&display=swap');
+
+* {
+    font-family: 'Varela Round', sans-serif;
+    @apply font-bold text-lg;
+}
