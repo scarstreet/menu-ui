@@ -26,8 +26,12 @@
         <SideButton v-for="btn in sideBtns" :key="btn.lable" :label="btn.lable" :icon="btn.icon" />
       </div>
       <div class="crafting">
-        <CraftMenu />
-        <BackPack />
+        <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px] pb-[30px]">
+          <CraftMenu />
+        </div>
+        <div class="flex-1">
+          <BackPack />
+        </div>
       </div>
       <div class="desc">a</div>
     </div>
@@ -138,7 +142,7 @@ export default {
   @apply bg-black bg-opacity-10 h-auto w-[350px] flex-col flex pl-[80px] pt-[50px] pr-[30px];
 }
 .crafting {
-  @apply h-auto w-auto grow flex-col flex;
+  @apply h-[972.4px] w-auto grow flex-col flex;
 }
 .desc {
   @apply h-auto w-[550px] flex-col;
