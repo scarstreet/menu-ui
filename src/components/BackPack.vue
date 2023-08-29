@@ -29,79 +29,78 @@
 export default {
   name: 'BackPack',
   props: { Items: Array },
+  computed: {},
   data: () => ({
-    example: [
-      1, 2, 3, 4, 5, 5, 56, 2, 6, 7, 3, 3, 1, 2, 3, 4, 5, 5, 56, 2,
-      6, 7, 3, 3, 1, 2, 3, 4, 5, 5, 56, 2, 6, 7, 3, 3, 1, 2, 3, 4,
-    ],
+    space: 40,
+    locked: 10,
     inventory: [
       {
         // eslint-disable-next-line global-require
-        image: require('@/assets/2.png'), name: 'Golden Apple', amount: 0, desc: 'A radiant apple imbued with magical energy.',
+        image: require('@/assets/2.png'), name: 'Golden Apple', amount: 28, desc: 'A radiant apple imbued with magical energy.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/3.png'), name: 'Peas', amount: 0, desc: 'A handful of plump and nutritious peas.',
+        image: require('@/assets/3.png'), name: 'Peas', amount: 23, desc: 'A handful of plump and nutritious peas.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/6.png'), name: 'Wood', amount: 0, desc: 'Timber ready for crafting and building.',
+        image: require('@/assets/6.png'), name: 'Wood', amount: 500, desc: 'Timber ready for crafting and building.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/7.png'), name: 'Egg', amount: 0, desc: 'A delicate, fresh chicken egg.',
+        image: require('@/assets/7.png'), name: 'Egg', amount: 34, desc: 'A delicate, fresh chicken egg.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/8.png'), name: 'Shovel', amount: 0, desc: 'Sturdy tool for digging and landscaping.',
+        image: require('@/assets/8.png'), name: 'Shovel', amount: 1, desc: 'Sturdy tool for digging and landscaping.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/10.png'), name: 'Leather Boots', amount: 0, desc: 'Comfortable boots made from supple leather.',
+        image: require('@/assets/10.png'), name: 'Leather Boots', amount: 1, desc: 'Comfortable boots made from supple leather.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/12.png'), name: 'Beet', amount: 0, desc: 'A hearty and earthy root vegetable.',
+        image: require('@/assets/12.png'), name: 'Beet', amount: 6, desc: 'A hearty and earthy root vegetable.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/13.png'), name: 'Garden Trimmer', amount: 0, desc: 'Precision tool for pruning plants.',
+        image: require('@/assets/13.png'), name: 'Garden Trimmer', amount: 1, desc: 'Precision tool for pruning plants.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/15.png'), name: 'Sickle', amount: 0, desc: 'Curved blade for efficient crop harvesting.',
+        image: require('@/assets/15.png'), name: 'Sickle', amount: 1, desc: 'Curved blade for efficient crop harvesting.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/16.png'), name: 'Carrot', amount: 0, desc: 'A crisp and vibrant orange vegetable.',
+        image: require('@/assets/16.png'), name: 'Carrot', amount: 12, desc: 'A crisp and vibrant orange vegetable.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/17.png'), name: 'Tomato', amount: 0, desc: 'Juicy and ripe red tomato.',
+        image: require('@/assets/17.png'), name: 'Tomato', amount: 4, desc: 'Juicy and ripe red tomato.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/18.png'), name: 'Cheese', amount: 0, desc: 'A savory wedge of fine cheese.',
+        image: require('@/assets/18.png'), name: 'Cheese', amount: 99, desc: 'A savory wedge of fine cheese.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/20.png'), name: 'Pitch Fork', amount: 0, desc: 'Multi-pronged tool for lifting hay and soil.',
+        image: require('@/assets/20.png'), name: 'Pitch Fork', amount: 1, desc: 'Multi-pronged tool for lifting hay and soil.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/22.png'), name: 'Pumpkin', amount: 0, desc: 'Large, ripe pumpkin with a festive aura.',
+        image: require('@/assets/22.png'), name: 'Pumpkin', amount: 10, desc: 'Large, ripe pumpkin with a festive aura.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/23.png'), name: 'Wheat', amount: 0, desc: 'Stalks of golden wheat, essential for baking.',
+        image: require('@/assets/23.png'), name: 'Wheat', amount: 24, desc: 'Stalks of golden wheat, essential for baking.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/24.png'), name: 'Strawberry', amount: 0, desc: 'Plump and sweet red strawberry.',
+        image: require('@/assets/24.png'), name: 'Strawberry', amount: 1, desc: 'Plump and sweet red strawberry.',
       },
       {
         //  eslint-disable-next-line global-require
-        image: require('@/assets/25.png'), name: 'Milk', amount: 0, desc: "Fresh, creamy cow's milk in a wooden bucket.",
+        image: require('@/assets/25.png'), name: 'Milk', amount: 16, desc: "Fresh, creamy cow's milk in a wooden bucket.",
       },
     ],
   }),

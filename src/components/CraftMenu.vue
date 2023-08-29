@@ -53,17 +53,16 @@
 export default {
   name: 'CraftMenu',
   props: { Recipes: Object },
+  computed: {},
   data: () => ({
-    example: [
-      1, 2, 3, 4, 5, 5, 56, 2, 6, 7, 3, 3, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 2, 1, 2, 3, 4, 5, 5,
-      56, 2, 6, 7, 3, 3, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 2,
-    ],
+    total: 40,
     craftable: [
       {
         // eslint-disable-next-line global-require
         image: require('@/assets/11.png'),
         name: 'Healing Herb Salve',
         categ: 'Tonics',
+        pinned: false,
         req: [
           { item: 'Golden Apple', amount: 5 },
           { item: 'Peas', amount: 16 },
@@ -76,6 +75,7 @@ export default {
         image: require('@/assets/21.png'),
         name: 'Enchanted Growth Potion',
         categ: 'Tonics',
+        pinned: false,
         req: [
           { item: 'Milk', amount: 16 },
           { item: 'Golden Apple', amount: 10 },
@@ -87,6 +87,7 @@ export default {
         image: require('../assets/26.png'),
         name: 'Emberleaf Fern',
         categ: 'Plants',
+        pinned: false,
         req: [
           { item: 'Golden Apple', amount: 1 },
           { item: 'Pumpkin', amount: 1 },
@@ -98,6 +99,7 @@ export default {
         image: require('../assets/27.png'),
         name: 'Elven Wisdom Bread',
         categ: 'Food',
+        pinned: false,
         req: [
           { item: 'Wheat', amount: 9 },
           { item: 'Golden Apple', amount: 1 },
@@ -110,6 +112,7 @@ export default {
         image: require('../assets/spell-scroll.svg'),
         name: "Scribe's Scroll of Knowledge",
         categ: 'Scrolls',
+        pinned: false,
         req: [
           { item: 'Wood', amount: 6 },
           { item: 'Golden Apple', amount: 3 },
@@ -121,6 +124,7 @@ export default {
         image: require('../assets/14.png'),
         name: 'Starlight Blossom',
         categ: 'Plants',
+        pinned: false,
         req: [
           { item: 'Peas', amount: 40 },
           { item: 'Golden Apple', amount: 3 },
@@ -132,6 +136,7 @@ export default {
         image: require('../assets/5.png'),
         name: 'Elemental Seeder',
         categ: 'Crops',
+        pinned: false,
         req: [
           { item: 'Shovel', amount: 1 },
           { item: 'Golden Apple', amount: 40 },
@@ -143,6 +148,7 @@ export default {
         image: require('../assets/21.png'),
         name: 'Nectar of Vitality',
         categ: 'Tonics',
+        pinned: false,
         req: [{ item: 'Golden Apple', amount: 100 }],
         desc: 'Distilled from the nectar of ancient plants, this tonic revitalizes the body and mind. It temporarily boosts strength, agility, and focus, making it a favored choice among adventurers facing formidable challenges.',
       },
@@ -151,6 +157,7 @@ export default {
         image: require('../assets/9.png'),
         name: 'Arcane Reading Chair',
         categ: 'Furniture',
+        pinned: false,
         req: [
           { item: 'Golden Apple', amount: 50 },
           { item: 'Wood', amount: 120 },
@@ -162,6 +169,7 @@ export default {
         image: require('../assets/19.png'),
         name: 'Feast of the Forest',
         categ: 'Food',
+        pinned: false,
         req: [
           { item: 'Peas', amount: 20 },
           { item: 'Golden Apple', amount: 5 },
