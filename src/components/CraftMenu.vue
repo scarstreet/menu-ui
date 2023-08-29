@@ -1,3 +1,4 @@
+<!-- eslint-disable global-require -->
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
@@ -17,7 +18,7 @@
           </svg>
         </div>
         <div class="w-[100%] flex justify-center items-center">
-          <img :src="i.image" class="w-[50px] h-[50px]" alt="" />
+          <img :src="i.image" class="w-[50px] h-[50px] object-contain" alt="" />
         </div>
         <div class="flex justify-start items-end">
           <div class="bg-white rounded-lg p-1">
@@ -49,7 +50,6 @@
 </template>
 
 <script>
-// eslint-disable import/no-dynamic-require
 export default {
   name: 'CraftMenu',
   props: { Recipes: Object },
@@ -60,83 +60,120 @@ export default {
     ],
     craftable: [
       {
-        image: '11',
+        // eslint-disable-next-line global-require
+        image: require('@/assets/11.png'),
         name: 'Healing Herb Salve',
         categ: 'Tonics',
+        req: [
+          { item: 'Golden Apple', amount: 5 },
+          { item: 'Peas', amount: 16 },
+          { item: 'Carrot', amount: 12 },
+        ],
         desc: 'This soothing salve is crafted from common herbs. When applied, it accelerates natural healing processes, restoring a portion of health over time.',
       },
       {
-        image: '21',
+        // eslint-disable-next-line global-require
+        image: require('@/assets/21.png'),
         name: 'Enchanted Growth Potion',
         categ: 'Tonics',
+        req: [
+          { item: 'Milk', amount: 16 },
+          { item: 'Golden Apple', amount: 10 },
+        ],
         desc: 'Brewed with magical ingredients, this potion stimulates plant growth. When sprinkled on crops or plants, they flourish rapidly, yielding bountiful harvests.',
       },
       {
-        image: '../assets/26.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/26.png'),
         name: 'Emberleaf Fern',
         categ: 'Plants',
+        req: [
+          { item: 'Golden Apple', amount: 1 },
+          { item: 'Pumpkin', amount: 1 },
+        ],
         desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
       },
       {
-        image: '../assets/27.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/27.png'),
         name: 'Elven Wisdom Bread',
         categ: 'Food',
+        req: [
+          { item: 'Wheat', amount: 9 },
+          { item: 'Golden Apple', amount: 1 },
+          { item: 'Milk', amount: 9 },
+        ],
         desc: 'Crafted using ancient elven recipes, this bread imparts wisdom to those who consume it. Partaking in its flavors enhances intelligence and problem-solving skills, making it a favorite among scholars and strategists.',
       },
       {
-        image: '../assets/spell-scroll.svg',
+        // eslint-disable-next-line global-require
+        image: require('../assets/spell-scroll.svg'),
         name: "Scribe's Scroll of Knowledge",
         categ: 'Scrolls',
+        req: [
+          { item: 'Wood', amount: 6 },
+          { item: 'Golden Apple', amount: 3 },
+        ],
         desc: 'Inscribed with intricate symbols, this scroll contains condensed wisdom and forgotten lore. When read, it imparts knowledge on various topics, from history to arcane arts, making it an invaluable resource for inquisitive minds.',
       },
       {
-        image: '../assets/14.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/14.png'),
         name: 'Starlight Blossom',
         categ: 'Plants',
+        req: [
+          { item: 'Peas', amount: 40 },
+          { item: 'Golden Apple', amount: 3 },
+        ],
         desc: 'The elusive Starlight Blossom is a radiant flower that only blooms under the light of a full moon. Its petals shimmer with a soft, ethereal glow, and when harvested, they can be used as a key ingredient in crafting potent potions that enhance magical abilities.',
       },
       {
-        image: '../assets/5.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/5.png'),
         name: 'Elemental Seeder',
         categ: 'Crops',
+        req: [
+          { item: 'Shovel', amount: 1 },
+          { item: 'Golden Apple', amount: 40 },
+        ],
         desc: 'This mystical device, when activated with the right materials, allows you to plant elemental-infused crops. These crops harness the power of fire, ice, or lightning, granting unique magical properties when harvested.',
       },
       {
-        image: '../assets/21.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/21.png'),
         name: 'Nectar of Vitality',
         categ: 'Tonics',
+        req: [{ item: 'Golden Apple', amount: 100 }],
         desc: 'Distilled from the nectar of ancient plants, this tonic revitalizes the body and mind. It temporarily boosts strength, agility, and focus, making it a favored choice among adventurers facing formidable challenges.',
       },
       {
-        image: '../assets/9.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/9.png'),
         name: 'Arcane Reading Chair',
         categ: 'Furniture',
+        req: [
+          { item: 'Golden Apple', amount: 50 },
+          { item: 'Wood', amount: 120 },
+        ],
         desc: 'This meticulously crafted chair is designed for scholars and magic users. Its enchantments provide comfort during long study sessions and grant a clearer connection to magical energies, enhancing the speed of spell research.',
       },
       {
-        image: '../assets/.19.png',
+        // eslint-disable-next-line global-require
+        image: require('../assets/19.png'),
         name: 'Feast of the Forest',
         categ: 'Food',
+        req: [
+          { item: 'Peas', amount: 20 },
+          { item: 'Golden Apple', amount: 5 },
+          { item: 'Beet', amount: 16 },
+        ],
         desc: "Culinary mastery meets nature's bounty in this feast. Prepared using ingredients sourced from the depths of the forest, consuming it replenishes health, grants temporary stamina, and fosters a strong connection with the natural world.",
       },
     ],
     methods: {
       cover(url) {
-        let urll = url;
-        if (url !== '') {
-          // You can check any matching expression.
-          try {
-            // eslint-disable-next-line import/no-dynamic-require, global-require
-            urll = require(`@/assets/${url}.png`);
-          } catch (e) {
-            // eslint-disable-next-line import/no-dynamic-require, global-require
-            urll = require('@/assets/2.png'); // I used a default image.
-          }
-        } else {
         // eslint-disable-next-line import/no-dynamic-require, global-require
-          urll = require('@/assets/2.png');
-        } // Default image.
-        return urll;
+        return require(url);
       },
     },
   }),

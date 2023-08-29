@@ -16,7 +16,10 @@
         </span>
       </div>
       <div class="the-grid">
-        <div v-for="(i,idx) in example" :key="'inventory'+idx" class="grid-object"></div>
+        <div v-for="(i,idx) in inventory" :key="'inventory'+idx" class="grid-object flex
+        items-center justify-center">
+        <img :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +33,76 @@ export default {
     example: [
       1, 2, 3, 4, 5, 5, 56, 2, 6, 7, 3, 3, 1, 2, 3, 4, 5, 5, 56, 2,
       6, 7, 3, 3, 1, 2, 3, 4, 5, 5, 56, 2, 6, 7, 3, 3, 1, 2, 3, 4,
+    ],
+    inventory: [
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/2.png'), name: 'Golden Apple', amount: 0, desc: 'A radiant apple imbued with magical energy.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/3.png'), name: 'Peas', amount: 0, desc: 'A handful of plump and nutritious peas.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/6.png'), name: 'Wood', amount: 0, desc: 'Timber ready for crafting and building.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/7.png'), name: 'Egg', amount: 0, desc: 'A delicate, fresh chicken egg.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/8.png'), name: 'Shovel', amount: 0, desc: 'Sturdy tool for digging and landscaping.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/10.png'), name: 'Leather Boots', amount: 0, desc: 'Comfortable boots made from supple leather.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/12.png'), name: 'Beet', amount: 0, desc: 'A hearty and earthy root vegetable.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/13.png'), name: 'Garden Trimmer', amount: 0, desc: 'Precision tool for pruning plants.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/15.png'), name: 'Sickle', amount: 0, desc: 'Curved blade for efficient crop harvesting.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/16.png'), name: 'Carrot', amount: 0, desc: 'A crisp and vibrant orange vegetable.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/17.png'), name: 'Tomato', amount: 0, desc: 'Juicy and ripe red tomato.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/18.png'), name: 'Cheese', amount: 0, desc: 'A savory wedge of fine cheese.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/20.png'), name: 'Pitch Fork', amount: 0, desc: 'Multi-pronged tool for lifting hay and soil.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/22.png'), name: 'Pumpkin', amount: 0, desc: 'Large, ripe pumpkin with a festive aura.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/23.png'), name: 'Wheat', amount: 0, desc: 'Stalks of golden wheat, essential for baking.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/24.png'), name: 'Strawberry', amount: 0, desc: 'Plump and sweet red strawberry.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/25.png'), name: 'Milk', amount: 0, desc: "Fresh, creamy cow's milk in a wooden bucket.",
+      },
     ],
   }),
 };
