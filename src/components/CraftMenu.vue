@@ -4,8 +4,10 @@
 <template>
   <div class="w-[100%] h-[406px] overflow-y-scroll grid-cont">
     <div class="the-grid">
-      <div v-for="(i, idx) in craftable" :key="'craftable' + idx" class="grid-object">
-        <div class="flex justify-end w-[100%] rotate-45 -translate-y-8 translate-x-5">
+      <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
+      ${isOk(i) ?' craftable':''}`">
+        <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-8 translate-x-5
+        ${i.pinned?'':'opacity-0'}`">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -18,9 +20,11 @@
           </svg>
         </div>
         <div class="w-[100%] flex justify-center items-center">
-          <img :src="i.image" class="w-[50px] h-[50px] object-contain" alt="" />
+          <img
+          :src="i.image" :class="`w-[50px] h-[50px] object-contain
+          ${i.name === 'na' ? 'opacity-10' : ''}`" alt="" />
         </div>
-        <div class="flex justify-start items-end">
+        <div :class="`flex justify-start items-end ${isOk(i) ?'':'opacity-0'}`">
           <div class="bg-white rounded-lg p-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,48 +56,40 @@
 <script>
 export default {
   name: 'CraftMenu',
-  props: { Recipes: Object },
-  computed: {},
+  props: { backpack: Array, mode: String },
+  methods: {
+    isOk(item) {
+      let isOk = true;
+      if (item.name === 'na') return false;
+      item.req.forEach((r) => {
+        this.backpack.forEach((b) => {
+          if (r.item === b.name && r.amount > b.amount) {
+            isOk = false;
+          }
+        });
+      });
+      return isOk;
+    },
+  },
+  computed: {
+    cCrafts() {
+      const arr = this.craftable.filter((x) => {
+        if (this.mode === '') {
+          return x;
+        } return x.categ === this.mode;
+      });
+      for (let i = arr.length; i < this.total; i += 1) {
+        arr.push({
+          // eslint-disable-next-line import/no-dynamic-require, global-require, prefer-template
+          name: 'na', image: require('@/assets/w' + ((i % 4) + 1) + '.png'), pinned: false, req: [], desc: '',
+        });
+      }
+      return arr;
+    },
+  },
   data: () => ({
     total: 40,
     craftable: [
-      {
-        // eslint-disable-next-line global-require
-        image: require('@/assets/11.png'),
-        name: 'Healing Herb Salve',
-        categ: 'Tonics',
-        pinned: false,
-        req: [
-          { item: 'Golden Apple', amount: 5 },
-          { item: 'Peas', amount: 16 },
-          { item: 'Carrot', amount: 12 },
-        ],
-        desc: 'This soothing salve is crafted from common herbs. When applied, it accelerates natural healing processes, restoring a portion of health over time.',
-      },
-      {
-        // eslint-disable-next-line global-require
-        image: require('@/assets/21.png'),
-        name: 'Enchanted Growth Potion',
-        categ: 'Tonics',
-        pinned: false,
-        req: [
-          { item: 'Milk', amount: 16 },
-          { item: 'Golden Apple', amount: 10 },
-        ],
-        desc: 'Brewed with magical ingredients, this potion stimulates plant growth. When sprinkled on crops or plants, they flourish rapidly, yielding bountiful harvests.',
-      },
-      {
-        // eslint-disable-next-line global-require
-        image: require('../assets/26.png'),
-        name: 'Emberleaf Fern',
-        categ: 'Plants',
-        pinned: false,
-        req: [
-          { item: 'Golden Apple', amount: 1 },
-          { item: 'Pumpkin', amount: 1 },
-        ],
-        desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
-      },
       {
         // eslint-disable-next-line global-require
         image: require('../assets/27.png'),
@@ -106,6 +102,18 @@ export default {
           { item: 'Milk', amount: 9 },
         ],
         desc: 'Crafted using ancient elven recipes, this bread imparts wisdom to those who consume it. Partaking in its flavors enhances intelligence and problem-solving skills, making it a favorite among scholars and strategists.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('../assets/26.png'),
+        name: 'Emberleaf Fern',
+        categ: 'Plants',
+        pinned: false,
+        req: [
+          { item: 'Golden Apple', amount: 1 },
+          { item: 'Pumpkin', amount: 1 },
+        ],
+        desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
       },
       {
         // eslint-disable-next-line global-require
@@ -130,6 +138,31 @@ export default {
           { item: 'Golden Apple', amount: 3 },
         ],
         desc: 'The elusive Starlight Blossom is a radiant flower that only blooms under the light of a full moon. Its petals shimmer with a soft, ethereal glow, and when harvested, they can be used as a key ingredient in crafting potent potions that enhance magical abilities.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/11.png'),
+        name: 'Healing Herb Salve',
+        categ: 'Tonics',
+        pinned: false,
+        req: [
+          { item: 'Golden Apple', amount: 5 },
+          { item: 'Peas', amount: 16 },
+          { item: 'Carrot', amount: 12 },
+        ],
+        desc: 'This soothing salve is crafted from common herbs. When applied, it accelerates natural healing processes, restoring a portion of health over time.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/21.png'),
+        name: 'Enchanted Growth Potion',
+        categ: 'Tonics',
+        pinned: false,
+        req: [
+          { item: 'Milk', amount: 16 },
+          { item: 'Golden Apple', amount: 10 },
+        ],
+        desc: 'Brewed with magical ingredients, this potion stimulates plant growth. When sprinkled on crops or plants, they flourish rapidly, yielding bountiful harvests.',
       },
       {
         // eslint-disable-next-line global-require
@@ -198,7 +231,7 @@ export default {
 .grid-object.selected {
   @apply border-4 border-solid border-white border-opacity-50;
 }
-.grid-object.craftable {
+.craftable {
   @apply bg-opacity-40;
 }
 .grid-object.known {

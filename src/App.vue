@@ -27,13 +27,16 @@
       </div>
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px] pb-[30px]">
-          <CraftMenu />
+          <CraftMenu :backpack="inventory" :mode="''" />
         </div>
         <div class="flex-1">
-          <BackPack />
+          <BackPack :inventory="inventory" />
         </div>
       </div>
-      <div class="desc">a</div>
+      <div class="desc">
+        <div class="bg-white w-[100%] h-auto grow"></div>
+        <div class="bg-black w-[100%] h-[]"></div>
+      </div>
     </div>
     <div class="background"></div>
   </div>
@@ -52,6 +55,8 @@ export default {
     SideButton, StatusBars, TopButton, CraftMenu, BackPack,
   },
   data: () => ({
+    activeSide: '',
+    activeTop: '',
     sideBtns: [
       {
         lable: 'All',
@@ -116,6 +121,127 @@ export default {
         icon: 'M12 8L15 13.2L18 10.5L17.3 14H6.7L6 10.5L9 13.2L12 8M12 4L8.5 10L3 5L5 16H19L21 5L15.5 10L12 4M19 18H5V19C5 19.6 5.4 20 6 20H18C18.6 20 19 19.6 19 19V18Z',
       },
     ],
+    inventory: [
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/2.png'),
+        name: 'Golden Apple',
+        amount: 28,
+        desc: 'A radiant apple imbued with magical energy.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/3.png'),
+        name: 'Peas',
+        amount: 23,
+        desc: 'A handful of plump and nutritious peas.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/6.png'),
+        name: 'Wood',
+        amount: 500,
+        desc: 'Timber ready for crafting and building.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/7.png'),
+        name: 'Egg',
+        amount: 34,
+        desc: 'A delicate, fresh chicken egg.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/8.png'),
+        name: 'Shovel',
+        amount: 1,
+        desc: 'Sturdy tool for digging and landscaping.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/10.png'),
+        name: 'Leather Boots',
+        amount: 1,
+        desc: 'Comfortable boots made from supple leather.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/12.png'),
+        name: 'Beet',
+        amount: 6,
+        desc: 'A hearty and earthy root vegetable.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/13.png'),
+        name: 'Garden Trimmer',
+        amount: 1,
+        desc: 'Precision tool for pruning plants.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/15.png'),
+        name: 'Sickle',
+        amount: 1,
+        desc: 'Curved blade for efficient crop harvesting.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/16.png'),
+        name: 'Carrot',
+        amount: 12,
+        desc: 'A crisp and vibrant orange vegetable.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/17.png'),
+        name: 'Tomato',
+        amount: 4,
+        desc: 'Juicy and ripe red tomato.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/18.png'),
+        name: 'Cheese',
+        amount: 99,
+        desc: 'A savory wedge of fine cheese.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/20.png'),
+        name: 'Pitch Fork',
+        amount: 1,
+        desc: 'Multi-pronged tool for lifting hay and soil.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/22.png'),
+        name: 'Pumpkin',
+        amount: 10,
+        desc: 'Large, ripe pumpkin with a festive aura.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/23.png'),
+        name: 'Wheat',
+        amount: 24,
+        desc: 'Stalks of golden wheat, essential for baking.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/24.png'),
+        name: 'Strawberry',
+        amount: 1,
+        desc: 'Plump and sweet red strawberry.',
+      },
+      {
+        //  eslint-disable-next-line global-require
+        image: require('@/assets/25.png'),
+        name: 'Milk',
+        amount: 16,
+        desc: "Fresh, creamy cow's milk in a wooden bucket.",
+      },
+    ],
   }),
 };
 </script>
@@ -145,7 +271,7 @@ export default {
   @apply h-[972.4px] w-auto grow flex-col flex;
 }
 .desc {
-  @apply h-auto w-[550px] flex-col;
+  @apply h-auto w-[550px] flex-col flex;
 }
 .top-left {
   @apply flex  h-auto w-[300px] flex-col items-center justify-center ml-[30px];
