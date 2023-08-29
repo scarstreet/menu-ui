@@ -1,7 +1,8 @@
 <template>
   <div class="w-[100%] grow pl-[40px] pr-[50px] pt-[10px] pb-[80px] h-[100%]">
-    <div class="w-[100%] bg-white bg-opacity-10 rounded-3xl p-[15px] flex flex-col">
-      <div class="text-amber-50 flex-row flex items-end pb-3">
+    <div class="w-[100%] h-[406px] overflow-hidden bg-white bg-opacity-10
+    rounded-3xl p-[15px] flex flex-col">
+      <div class="text-amber-50 pl-[20px] flex-row flex items-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -19,7 +20,7 @@
         </svg>
         <span class="ml-1"> Backpack </span>
       </div>
-      <div class="the-grid">
+      <div class="the-grid pl-[20px]">
         <div
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
@@ -71,7 +72,7 @@ export default {
 
 <style scoped>
 .the-grid {
-  @apply grid grid-flow-row-dense grid-cols-10 gap-2 overflow-y-scroll pr-[20px];
+  @apply grid grid-flow-row-dense grid-cols-10 gap-2 overflow-y-hidden pr-[20px];
 }
 .grid-object {
   @apply bg-white col-span-1 aspect-square rounded-2xl bg-opacity-10;
@@ -84,6 +85,6 @@ export default {
   @apply border-4 border-solid border-white border-opacity-50;
 }
 .grid-object.locked {
-  @apply rounded-full scale-50;
+  @apply rounded-full scale-[.30];
 }
 </style>

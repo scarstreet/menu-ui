@@ -6,7 +6,7 @@
     <div class="the-grid">
       <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
       ${isOk(i) ?' craftable':''}`">
-        <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-8 translate-x-5
+        <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-[25px] translate-x-5
         ${i.pinned?'':'opacity-0'}`">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,10 +21,10 @@
         </div>
         <div class="w-[100%] flex justify-center items-center">
           <img
-          :src="i.image" :class="`w-[50px] h-[50px] object-contain
+          :src="i.image" :class="`w-[80px] h-[80px] object-contain -translate-y-[20px]
           ${i.name === 'na' ? 'opacity-10' : ''}`" alt="" />
         </div>
-        <div :class="`flex justify-start items-end ${isOk(i) ?'':'opacity-0'}`">
+        <div :class="`flex justify-start items-end -translate-y-[35px] ${isOk(i) ?'':'opacity-0'}`">
           <div class="bg-white rounded-lg p-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,8 @@ export default {
         image: require('../assets/27.png'),
         name: 'Elven Wisdom Bread',
         categ: 'Food',
-        pinned: false,
+        pinned: true,
+        rewards: { cube: 10, hammer: 0 },
         req: [
           { item: 'Wheat', amount: 9 },
           { item: 'Golden Apple', amount: 1 },
@@ -109,9 +110,10 @@ export default {
         name: 'Emberleaf Fern',
         categ: 'Plants',
         pinned: false,
+        rewards: { cube: 0, hammer: 10 },
         req: [
-          { item: 'Golden Apple', amount: 1 },
-          { item: 'Pumpkin', amount: 1 },
+          { item: 'Golden Apple', amount: 4 },
+          { item: 'Pumpkin', amount: 20 },
         ],
         desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
       },
@@ -121,9 +123,10 @@ export default {
         name: "Scribe's Scroll of Knowledge",
         categ: 'Scrolls',
         pinned: false,
+        rewards: { cube: 2, hammer: 10 },
         req: [
           { item: 'Wood', amount: 6 },
-          { item: 'Golden Apple', amount: 3 },
+          { item: 'Golden Apple', amount: 10 },
         ],
         desc: 'Inscribed with intricate symbols, this scroll contains condensed wisdom and forgotten lore. When read, it imparts knowledge on various topics, from history to arcane arts, making it an invaluable resource for inquisitive minds.',
       },
@@ -133,6 +136,7 @@ export default {
         name: 'Starlight Blossom',
         categ: 'Plants',
         pinned: false,
+        rewards: { cube: 30, hammer: 20 },
         req: [
           { item: 'Peas', amount: 40 },
           { item: 'Golden Apple', amount: 3 },
@@ -145,6 +149,7 @@ export default {
         name: 'Healing Herb Salve',
         categ: 'Tonics',
         pinned: false,
+        rewards: { cube: 10, hammer: 3 },
         req: [
           { item: 'Golden Apple', amount: 5 },
           { item: 'Peas', amount: 16 },
@@ -158,6 +163,7 @@ export default {
         name: 'Enchanted Growth Potion',
         categ: 'Tonics',
         pinned: false,
+        rewards: { cube: 3, hammer: 0 },
         req: [
           { item: 'Milk', amount: 16 },
           { item: 'Golden Apple', amount: 10 },
@@ -169,7 +175,8 @@ export default {
         image: require('../assets/5.png'),
         name: 'Elemental Seeder',
         categ: 'Crops',
-        pinned: false,
+        pinned: true,
+        rewards: { cube: 10, hammer: 10 },
         req: [
           { item: 'Shovel', amount: 1 },
           { item: 'Golden Apple', amount: 40 },
@@ -182,6 +189,7 @@ export default {
         name: 'Nectar of Vitality',
         categ: 'Tonics',
         pinned: false,
+        rewards: { cube: 4, hammer: 20 },
         req: [{ item: 'Golden Apple', amount: 100 }],
         desc: 'Distilled from the nectar of ancient plants, this tonic revitalizes the body and mind. It temporarily boosts strength, agility, and focus, making it a favored choice among adventurers facing formidable challenges.',
       },
@@ -191,6 +199,7 @@ export default {
         name: 'Arcane Reading Chair',
         categ: 'Furniture',
         pinned: false,
+        rewards: { cube: 5, hammer: 10 },
         req: [
           { item: 'Golden Apple', amount: 50 },
           { item: 'Wood', amount: 120 },
@@ -203,10 +212,10 @@ export default {
         name: 'Feast of the Forest',
         categ: 'Food',
         pinned: false,
+        rewards: { cube: 2, hammer: 0 },
         req: [
-          { item: 'Peas', amount: 20 },
-          { item: 'Golden Apple', amount: 5 },
-          { item: 'Beet', amount: 16 },
+          { item: 'Peas', amount: 1 },
+          { item: 'Beet', amount: 1 },
         ],
         desc: "Culinary mastery meets nature's bounty in this feast. Prepared using ingredients sourced from the depths of the forest, consuming it replenishes health, grants temporary stamina, and fosters a strong connection with the natural world.",
       },
@@ -226,7 +235,7 @@ export default {
   @apply grid grid-flow-row-dense grid-cols-8 gap-2 pr-[20px];
 }
 .grid-object {
-  @apply bg-white col-span-1 aspect-square rounded-3xl bg-opacity-10;
+  @apply bg-white col-span-1 aspect-square rounded-3xl bg-opacity-10 h-[110px];
 }
 .grid-object.selected {
   @apply border-4 border-solid border-white border-opacity-50;
