@@ -24,13 +24,17 @@
         <div
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
-          :class="`grid-object flex items-center justify-center
+          :class="`grid-object flex flex-col items-center justify-center
           ${i.name==='na' || i.name==='locked'?'':'item'}
           ${i.name === 'locked'? 'locked':''}
           ${i.selected ? 'selected' : ''}`"
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
           :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
+          <div v-if="i.amount > 1" class="bg-[#eaceaf] rounded-md self-end w-[40px] text-center
+            text-sm">
+            {{ i.amount }}
+          </div>
         </div>
       </div>
     </div>
@@ -70,8 +74,7 @@ export default {
       for (let j = 0; j < this.space; j += 1) {
         inv[j].selected = j === this.select[1] && this.select[0] === 'backpack';
         if (inv[j].selected) {
-          console.log('HIIII');
-          this.$emit('set-craft', inv[j]);
+          this.$emit('set-backpack', inv[j]);
         }
       }
       return inv;

@@ -3,7 +3,7 @@
         flex flex-col p-[60px] pb-[30px] items-center">
           <img :src="item.name !== 'na' ? item.image : require('@/assets/w1.png')"
           class="w-[200px] h-[200px] object-contain" alt="" />
-          <div class="w-[100%] text-2xl text-amber-950">
+          <div class="w-[100%] text-2xl text-amber-950 first-letter:capitalize">
             {{ item.name !== 'na' ? item.name : ''}}
           </div>
           <div class="w-[100%] text-xl mb-3 text-[#ddae62]">
@@ -28,11 +28,11 @@
             <div class="text-[#9b896b]">Hammer</div>
           </div>
           </div>
-          <div v-if="item.name !== 'na'"
+          <div v-if="item.name !== 'na' && mode === 'craft'"
           class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
           <div v-if="item.name !== 'na' && mode === 'craft'">
             <div v-for="(i,idx) in [1,2,3,4]" :key="'tesuto'+idx"
-            :class="`flex-row flex w-[100%] h-[40px]
+            :class="`flex-row flex w-[350px] h-[40px]
             items-center ${idx<3?'border-b-2':''} border-solid border-opacity-20
             border-[#9b896b] py-[30px]`">
               <img src="../assets/2.png" class="object-contain w-[30px] h-[30px]" alt="" />
