@@ -35,19 +35,20 @@
     </div>
     <div class="content z-10">
       <div class="side-bar">
-        <SideButton v-for="btn in cSideBtns" :key="btn.lable"
-        :label="btn.lable" :icon="btn.icon" :isActive="btn.isActive"  @change-side="changeSide" />
+        <SideButton v-for="btn in cSideBtns" :key="btn.label"
+        :label="btn.label" :icon="btn.icon" :isActive="btn.isActive"  @change-side="changeSide" />
       </div>
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
-          <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected" />
+          <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected"
+          @set-craft="setCraftSelect"/>
         </div>
         <div class="flex-1">
           <BackPack :inventory="inventory" />
         </div>
       </div>
       <div class="desc">
-        <DescCard :toCraft="{}" :inventory="inventory" />
+        <DescCard :item="currentItem" :inventory="inventory" />
         <CtrlBoard />
       </div>
     </div>
@@ -81,9 +82,9 @@ export default {
     navSide(axis, dir) {
       if (axis === 'y' && this.selected[1] + dir >= 0 && this.selected[1] + dir < this.sideBtns.length) {
         this.selected[1] += dir;
-        this.activeSide = this.sideBtns[this.selected[1]].lable;
+        this.activeSide = this.sideBtns[this.selected[1]].label;
       } if (axis === 'x') {
-        this.selected = ['craft', -1, ''];
+        this.selected = ['craft', -1];
       }
     },
     navTop(dir) {
@@ -94,30 +95,33 @@ export default {
     },
     navCraft(axis, dir) {
       console.log(axis, dir);
-      console.log(this.selected[0], this.selected[1], this.selected[2]);
+      console.log(this.selected[0], this.selected[1]);
       if (
         axis === 'x'
         && dir === -1
         && this.selected[1] % 8 === 0) {
         // When go left on the leftmost col, return to side
-        this.selected = ['side', this.sideBtns.findIndex((x) => x.lable === this.activeSide), ''];
+        this.selected = ['side', this.sideBtns.findIndex((x) => x.label === this.activeSide)];
       } else if (
         axis === 'x'
         && dir + this.selected[1] < 40
         && dir + this.selected[1] >= 0) {
-        this.selected = ['craft', this.selected[1] + dir, ''];
+        this.selected = ['craft', this.selected[1] + dir];
       } else if (
         axis === 'y'
         && dir * 8 + this.selected[1] < 40
         && dir * 8 + this.selected[1] >= 0) {
-        this.selected = ['craft', this.selected[1] + dir * 8, ''];
+        this.selected = ['craft', this.selected[1] + dir * 8];
       } else if (
         axis === 'y'
         && dir === 1
         && this.selected[1] > 32
         && this.selected[1] <= 39) {
-        this.selected = ['backpack', 0, ''];
+        this.selected = ['backpack', 0];
       }
+    },
+    setCraftSelect(item) {
+      this.currentItem = item;
     },
   },
   computed: {
@@ -125,7 +129,7 @@ export default {
       const arr = [];
       this.sideBtns.forEach((x) => {
         const o = x;
-        o.isActive = this.activeSide === o.lable;
+        o.isActive = this.activeSide === o.label;
         arr.push(o);
       });
       return arr;
@@ -184,33 +188,37 @@ export default {
     activeSide: 'All',
     activeTop: 'Crafting',
     activeTopId: 3,
+    currentItem: {
+      // eslint-disable-next-line global-require
+      name: 'na', image: require('@/assets/w1.png'), pinned: false, req: [], desc: '', selected: false,
+    },
     sideBtns: [
       {
-        lable: 'All',
+        label: 'All',
         icon: 'M19,11H13V5H19M19,19H13V13H19M11,11H5V5H11M11,19H5V13H11M3,21H21V3H3V21Z',
       },
       {
-        lable: 'Crops',
+        label: 'Crops',
         icon: 'M12 20H2V18H7.75C7 15.19 4.81 13 2 12.26C2.64 12.1 3.31 12 4 12C8.42 12 12 15.58 12 20M22 12.26C21.36 12.1 20.69 12 20 12C17.07 12 14.5 13.58 13.12 15.93C13.41 16.59 13.65 17.28 13.79 18C13.92 18.65 14 19.32 14 20H22V18H16.24C17 15.19 19.19 13 22 12.26M15.64 11C16.42 8.93 17.87 7.18 19.73 6C15.44 6.16 12 9.67 12 14V14C12.95 12.75 14.2 11.72 15.64 11M11.42 8.85C10.58 6.66 8.88 4.89 6.7 4C8.14 5.86 9 8.18 9 10.71C9 10.92 8.97 11.12 8.96 11.32C9.39 11.56 9.79 11.84 10.18 12.14C10.39 10.96 10.83 9.85 11.42 8.85Z',
       },
       {
-        lable: 'Plants',
+        label: 'Plants',
         icon: 'M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z',
       },
       {
-        lable: 'Tonics',
+        label: 'Tonics',
         icon: 'M13 4H11L10 2H14L13 4M19 13V22H5V13C5 10.24 7.24 8 10 8V6H9V5H15V6H14V8C16.76 8 19 10.24 19 13M17 13C17 11.35 15.65 10 14 10H10C8.35 10 7 11.35 7 13V20H17V13M15 16H13V18H11V16H9V14H11V12H13V14H15V16Z',
       },
       {
-        lable: 'Furniture',
+        label: 'Furniture',
         icon: 'M19 9V7C19 5.35 17.65 4 16 4H8C6.35 4 5 5.35 5 7V9C3.35 9 2 10.35 2 12V17C2 18.65 3.35 20 5 20V22H7V20H17V22H19V20C20.65 20 22 18.65 22 17V12C22 10.35 20.65 9 19 9M7 7C7 6.45 7.45 6 8 6H16C16.55 6 17 6.45 17 7V9.78C16.39 10.33 16 11.12 16 12V14H8V12C8 11.12 7.61 10.33 7 9.78V7M20 17C20 17.55 19.55 18 19 18H5C4.45 18 4 17.55 4 17V12C4 11.45 4.45 11 5 11S6 11.45 6 12V16H18V12C18 11.45 18.45 11 19 11S20 11.45 20 12V17Z',
       },
       {
-        lable: 'Food',
+        label: 'Food',
         icon: 'M20,10C18.58,7.57 15.5,6.69 13,8V3H11V8C8.5,6.69 5.42,7.57 4,10C2,13 7,22 9,22C11,22 11,21 12,21C13,21 13,22 15,22C17,22 22,13 20,10M18.25,13.38C17.63,15.85 16.41,18.12 14.7,20C14.5,20 14.27,19.9 14.1,19.75C12.87,18.76 11.13,18.76 9.9,19.75C9.73,19.9 9.5,20 9.3,20C7.59,18.13 6.36,15.85 5.75,13.39C5.5,12.66 5.45,11.87 5.66,11.12C6.24,10.09 7.32,9.43 8.5,9.4C9.06,9.41 9.61,9.54 10.11,9.79L11,10.24H13L13.89,9.79C14.39,9.54 14.94,9.41 15.5,9.4C16.68,9.43 17.76,10.08 18.34,11.11C18.55,11.86 18.5,12.65 18.25,13.38M11,5C5.38,8.07 4.11,3.78 4.11,3.78C4.11,3.78 6.77,0.19 11,5Z',
       },
       {
-        lable: 'Scrolls',
+        label: 'Scrolls',
         icon: 'M15,20A1,1 0 0,0 16,19V4H8A1,1 0 0,0 7,5V16H5V5A3,3 0 0,1 8,2H19A3,3 0 0,1 22,5V6H20V5A1,1 0 0,0 19,4A1,1 0 0,0 18,5V9L18,19A3,3 0 0,1 15,22H5A3,3 0 0,1 2,19V18H13A2,2 0 0,0 15,20M9,6H14V8H9V6M9,10H14V12H9V10M9,14H14V16H9V14Z',
       },
     ],

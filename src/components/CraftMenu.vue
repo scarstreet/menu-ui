@@ -94,8 +94,8 @@ export default {
       }
       for (let i = 0; i < 40; i += 1) {
         arr[i].selected = i === this.select[1] && this.select[0] === 'craft';
+        if (arr[i].selected) this.$emit('set-craft', arr[i]);
       }
-      console.log(this.select);
       return arr;
     },
   },
