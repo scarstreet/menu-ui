@@ -6,7 +6,7 @@
     <div class="the-grid">
       <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
-      ${isSelected(i) ? 'selected ' : ' '}`">
+      ${i.selected ? 'selected ' : ' '}`">
         <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-[25px] translate-x-5
         ${i.pinned?'':'opacity-0'}`">
           <svg
@@ -71,8 +71,12 @@ export default {
       });
       return isOk;
     },
-    isSelected(item) {
-      return item.selected && this.select === 'craft';
+    isSlc(idx) {
+      if (idx === this.select[1] && this.select[0] === 'craft') {
+        console.log(idx === this.select[1], this.select[0] === 'craft');
+        console.log(`${idx} === ${this.select[1]}, ${this.select[0]} === ${'craft'}`);
+      }
+      return idx === this.select[1] && this.select[0] === 'craft';
     },
   },
   computed: {
@@ -85,13 +89,12 @@ export default {
       for (let i = arr.length; i < this.total; i += 1) {
         arr.push({
           // eslint-disable-next-line import/no-dynamic-require, global-require, prefer-template
-          name: 'na', image: require('@/assets/w' + ((i % 4) + 1) + '.png'), pinned: false, req: [], desc: '',
+          name: 'na', image: require('@/assets/w' + ((i % 4) + 1) + '.png'), pinned: false, req: [], desc: '', selected: false,
         });
       }
-      arr.forEach((x, idx) => {
-        // eslint-disable-next-line no-param-reassign
-        if (idx === this.select[1]) x.selected = true;
-      });
+      for (let i = 0; i < 40; i += 1) {
+        arr[i].selected = i === this.select[1] && this.select[0] === 'craft';
+      }
       console.log(this.select);
       return arr;
     },

@@ -105,12 +105,12 @@ export default {
         axis === 'x'
         && dir + this.selected[1] < 40
         && dir + this.selected[1] >= 0) {
-        this.selected[1] += dir;
+        this.selected = ['craft', this.selected[1] + dir, ''];
       } else if (
         axis === 'y'
         && dir * 8 + this.selected[1] < 40
         && dir * 8 + this.selected[1] >= 0) {
-        this.selected[1] += dir * 8;
+        this.selected = ['craft', this.selected[1] + dir * 8, ''];
       } else if (
         axis === 'y'
         && dir === 1
@@ -159,9 +159,6 @@ export default {
         }
       }
       if (event.key === 'ArrowLeft' || event.key === 'a') {
-        if (this.selected[0] === 'side') {
-          this.navSide('x', -1); // DO NOTHING!!
-        }
         if (this.selected[0] === 'craft') {
           this.navCraft('x', -1);
         }
