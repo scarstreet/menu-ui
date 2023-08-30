@@ -25,7 +25,9 @@
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
           :class="`grid-object flex items-center justify-center
-          ${i.name==='na' || i.name==='locked'?'':'item'} ${i.name === 'locked'? 'locked':''}`"
+          ${i.name==='na' || i.name==='locked'?'':'item'}
+          ${i.name === 'locked'? 'locked':''}
+          ${i.selected ? 'selected' : ''}`"
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
           :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
@@ -38,7 +40,7 @@
 <script>
 export default {
   name: 'BackPack',
-  props: { inventory: Array },
+  props: { inventory: Array, select: Array },
   methods: {
     isMulti(item) {
       if (item.amount > 1) {
@@ -54,10 +56,23 @@ export default {
       const inv = this.inventory;
       let i = inv.length;
       for (i; i < this.space - this.locked; i += 1) {
-        inv.push({ name: 'na' });
+        inv.push({
+          // eslint-disable-next-line global-require
+          name: 'na', image: require('@/assets/w1.png'), req: [], desc: '', selected: false, amount: 0,
+        });
       }
       for (i; i < this.space; i += 1) {
-        inv.push({ name: 'locked' });
+        inv.push({
+          // eslint-disable-next-line global-require
+          name: 'locked', image: require('@/assets/w1.png'), req: [], desc: '', selected: false, amount: 0,
+        });
+      }
+      for (let j = 0; j < this.space; j += 1) {
+        inv[j].selected = j === this.select[1] && this.select[0] === 'backpack';
+        if (inv[j].selected) {
+          console.log('HIIII');
+          this.$emit('set-craft', inv[j]);
+        }
       }
       return inv;
     },
@@ -82,7 +97,7 @@ export default {
 }
 
 .grid-object.selected {
-  @apply border-4 border-solid border-white border-opacity-50;
+  @apply border-8 border-solid border-white;
 }
 .grid-object.locked {
   @apply rounded-full scale-[.30];

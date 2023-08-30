@@ -2,7 +2,7 @@
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
-  <div class="w-[100%] h-[406px] overflow-y-scroll grid-cont">
+  <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont">
     <div class="the-grid">
       <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}

@@ -44,11 +44,11 @@
           @set-craft="setCraftSelect"/>
         </div>
         <div class="flex-1">
-          <BackPack :inventory="inventory" />
+          <BackPack :inventory="inventory" :select="selected" @set-backpack="setCraftSelect" />
         </div>
       </div>
       <div class="desc">
-        <DescCard :item="currentItem" :inventory="inventory" />
+        <DescCard :item="currentItem" :inventory="inventory" :mode="selected[0]" />
         <CtrlBoard />
       </div>
     </div>
@@ -94,8 +94,6 @@ export default {
       }
     },
     navCraft(axis, dir) {
-      console.log(axis, dir);
-      console.log(this.selected[0], this.selected[1]);
       if (
         axis === 'x'
         && dir === -1
@@ -115,13 +113,45 @@ export default {
       } else if (
         axis === 'y'
         && dir === 1
-        && this.selected[1] > 32
-        && this.selected[1] <= 39) {
-        this.selected = ['backpack', 0];
+        && this.selected[1] + 8 >= 40) {
+        this.selected = ['backpack', -10];
+      }
+    },
+    navBackpack(axis, dir) {
+      if (
+        axis === 'x'
+        && dir === -1
+        && this.selected[1] % 10 === 0) {
+        // When go left on the leftmost col, return to side
+        this.selected = ['side', this.sideBtns.findIndex((x) => x.label === this.activeSide)];
+      } else if (
+        axis === 'x'
+        && dir + this.selected[1] < 40
+        && dir + this.selected[1] >= 0) {
+        this.selected = ['backpack', this.selected[1] + dir];
+      } else if (
+        axis === 'y'
+        && dir === -1
+        && this.selected[1] < 10) {
+        this.selected = ['craft', 32];
+      } else if (
+        axis === 'y'
+        && dir * 10 + this.selected[1] < 40
+        && dir * 10 + this.selected[1] >= 0) {
+        this.selected = ['backpack', this.selected[1] + dir * 10];
       }
     },
     setCraftSelect(item) {
       this.currentItem = item;
+      if (item.name === 'na') {
+        this.currentItem = this.selected[0] === 'craft' ? {
+          // eslint-disable-next-line global-require
+          name: 'na', image: require('@/assets/w1.png'), pinned: false, req: [], desc: '', selected: false,
+        } : {
+          // eslint-disable-next-line global-require
+          name: 'na', image: require('@/assets/w1.png'), req: [], desc: '', selected: false, amount: 0,
+        };
+      }
     },
   },
   computed: {
@@ -153,6 +183,9 @@ export default {
         if (this.selected[0] === 'craft') {
           this.navCraft('y', 1);
         }
+        if (this.selected[0] === 'backpack') {
+          this.navBackpack('y', 1);
+        }
       }
       if (event.key === 'ArrowUp' || event.key === 'w') {
         if (this.selected[0] === 'side') {
@@ -161,10 +194,16 @@ export default {
         if (this.selected[0] === 'craft') {
           this.navCraft('y', -1);
         }
+        if (this.selected[0] === 'backpack') {
+          this.navBackpack('y', -1);
+        }
       }
       if (event.key === 'ArrowLeft' || event.key === 'a') {
         if (this.selected[0] === 'craft') {
           this.navCraft('x', -1);
+        }
+        if (this.selected[0] === 'backpack') {
+          this.navBackpack('x', -1);
         }
       }
       if (event.key === 'ArrowRight' || event.key === 'd') {
@@ -174,6 +213,9 @@ export default {
         if (this.selected[0] === 'craft') {
           this.navCraft('x', 1);
         }
+        if (this.selected[0] === 'backpack') {
+          this.navBackpack('x', 1);
+        }
       }
       if (event.key === 'q') {
         this.navTop(-1);
@@ -181,10 +223,11 @@ export default {
       if (event.key === 'e') {
         this.navTop(1);
       }
+      console.log(this.selected);
     });
   },
   data: () => ({
-    selected: ['side', 0, ''],
+    selected: ['side', 0],
     activeSide: 'All',
     activeTop: 'Crafting',
     activeTopId: 3,
@@ -261,6 +304,7 @@ export default {
         // eslint-disable-next-line global-require
         image: require('@/assets/2.png'),
         name: 'Golden Apple',
+        categ: 'Food',
         amount: 28,
         desc: 'A radiant apple imbued with magical energy.',
       },
@@ -268,6 +312,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/3.png'),
         name: 'Peas',
+        categ: 'Food',
         amount: 23,
         desc: 'A handful of plump and nutritious peas.',
       },
@@ -275,6 +320,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/6.png'),
         name: 'Wood',
+        categ: 'Furniture',
         amount: 500,
         desc: 'Timber ready for crafting and building.',
       },
@@ -282,6 +328,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/7.png'),
         name: 'Egg',
+        categ: 'Food',
         amount: 34,
         desc: 'A delicate, fresh chicken egg.',
       },
@@ -289,6 +336,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/8.png'),
         name: 'Shovel',
+        categ: 'Furniture',
         amount: 1,
         desc: 'Sturdy tool for digging and landscaping.',
       },
@@ -296,6 +344,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/10.png'),
         name: 'Leather Boots',
+        categ: 'Furniture',
         amount: 1,
         desc: 'Comfortable boots made from supple leather.',
       },
@@ -303,6 +352,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/12.png'),
         name: 'Beet',
+        categ: 'Food',
         amount: 6,
         desc: 'A hearty and earthy root vegetable.',
       },
@@ -310,6 +360,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/13.png'),
         name: 'Garden Trimmer',
+        categ: 'Furniture',
         amount: 1,
         desc: 'Precision tool for pruning plants.',
       },
@@ -317,6 +368,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/15.png'),
         name: 'Sickle',
+        categ: 'Furniture',
         amount: 1,
         desc: 'Curved blade for efficient crop harvesting.',
       },
@@ -324,6 +376,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/16.png'),
         name: 'Carrot',
+        categ: 'Food',
         amount: 12,
         desc: 'A crisp and vibrant orange vegetable.',
       },
@@ -331,6 +384,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/17.png'),
         name: 'Tomato',
+        categ: 'Food',
         amount: 4,
         desc: 'Juicy and ripe red tomato.',
       },
@@ -338,6 +392,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/18.png'),
         name: 'Cheese',
+        categ: 'Food',
         amount: 99,
         desc: 'A savory wedge of fine cheese.',
       },
@@ -345,6 +400,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/20.png'),
         name: 'Pitch Fork',
+        categ: 'Furniture',
         amount: 1,
         desc: 'Multi-pronged tool for lifting hay and soil.',
       },
@@ -352,6 +408,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/22.png'),
         name: 'Pumpkin',
+        categ: 'Food',
         amount: 10,
         desc: 'Large, ripe pumpkin with a festive aura.',
       },
@@ -359,6 +416,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/23.png'),
         name: 'Wheat',
+        categ: 'Food',
         amount: 24,
         desc: 'Stalks of golden wheat, essential for baking.',
       },
@@ -366,6 +424,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/24.png'),
         name: 'Strawberry',
+        categ: 'Food',
         amount: 1,
         desc: 'Plump and sweet red strawberry.',
       },
@@ -373,6 +432,7 @@ export default {
         //  eslint-disable-next-line global-require
         image: require('@/assets/25.png'),
         name: 'Milk',
+        categ: 'Food',
         amount: 16,
         desc: "Fresh, creamy cow's milk in a wooden bucket.",
       },
