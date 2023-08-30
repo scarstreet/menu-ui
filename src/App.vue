@@ -11,7 +11,8 @@
         >
           Q
         </p>
-        <TopButton v-for="i in topBtns" :key="i.label" :label="i.label" :icon="i.icon" />
+        <TopButton v-for="i in cTopBtns" :key="i.label" :label="i.label"
+        :icon="i.icon" :isActive="i.isActive" @change-top="changeTop" />
         <p
           class="w-[30px] rounded-lg
           bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20"
@@ -34,7 +35,8 @@
     </div>
     <div class="content z-10">
       <div class="side-bar">
-        <SideButton v-for="btn in sideBtns" :key="btn.lable" :label="btn.lable" :icon="btn.icon" />
+        <SideButton v-for="btn in cSideBtns" :key="btn.lable"
+        :label="btn.lable" :icon="btn.icon" :isActive="btn.isActive"  @change-side="changeSide" />
       </div>
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
@@ -68,9 +70,39 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     SideButton, StatusBars, TopButton, CraftMenu, BackPack, DescCard, CtrlBoard,
   },
+  methods: {
+    changeSide(i) {
+      this.activeSide = i;
+    },
+    changeTop(i) {
+      console.log(i);
+      this.activeTop = i;
+    },
+  },
+  computed: {
+    cSideBtns() {
+      const arr = [];
+      this.sideBtns.forEach((x) => {
+        const o = x;
+        o.isActive = this.activeSide === o.lable;
+        arr.push(o);
+      });
+      return arr;
+    },
+    cTopBtns() {
+      const arr = [];
+      this.topBtns.forEach((x) => {
+        const o = x;
+        o.isActive = this.activeTop === o.label;
+        console.log(o);
+        arr.push(o);
+      });
+      return arr;
+    },
+  },
   data: () => ({
-    activeSide: '',
-    activeTop: '',
+    activeSide: 'All',
+    activeTop: 'Crafting',
     sideBtns: [
       {
         lable: 'All',

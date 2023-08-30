@@ -1,16 +1,16 @@
 <template>
-  <button class="top-btn group">
+  <button class="top-btn group" @click="$emit('change-top', label)">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="3.2em"
       height="3.2em"
-      class="top-btn-icon"
+      :class="`top-btn-icon ${isActive ? 'active':''}`"
     >
       <title>border-all</title>
       <path :d="icon" />
     </svg>
-    <span class="top-btn-txt">
+    <span :class="`top-btn-txt ${isActive ? 'active':''}`">
       {{ label }}
     </span>
   </button>
@@ -36,9 +36,12 @@ export default {
 }
 
 .top-btn-icon {
-  @apply group-hover:fill-[#ddae62] fill-[#9b896b] duration-300;
+  @apply group-hover:fill-amber-50 fill-[#9b896b] duration-300;
 }
-.active {
-    @apply fill-[#ddae62] block
+.top-btn-icon.active {
+  @apply fill-[#ddae62];
+}
+.top-btn-txt.active {
+  @apply block;
 }
 </style>

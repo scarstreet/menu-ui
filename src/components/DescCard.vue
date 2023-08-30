@@ -2,14 +2,14 @@
   <div class="bg-amber-50 rounded-3xl h-auto grow mr-[40px] mt-[50px] mb-[30px]
         flex flex-col p-[60px] pb-[30px] items-center">
           <img src="@/assets/2.png" class="w-[200px] h-[200px] object-contain" alt="" />
-          <div class="w-[100%] text-2xl">
+          <div class="w-[100%] text-2xl text-amber-950">
             The Item Name
           </div>
-          <div class="w-[100%] text-xl mb-3">
+          <div class="w-[100%] text-xl mb-3 text-[#ddae62]">
             Category
           </div>
           <div class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
-          <div class="w-[100%] my-3">
+          <div class="w-[100%] my-3 text-[#9b896b]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua.
           </div>
@@ -31,10 +31,10 @@
           items-center ${idx<3?'border-b-2':''} border-solid border-opacity-20
           border-[#9b896b] py-[30px]`">
             <img src="../assets/2.png" class="object-contain w-[30px] h-[30px]" alt="" />
-            <div class="ml-3">Material Name</div>
+            <div class="ml-3 text-[#9b896b]">Material Name</div>
             <div class="grow"></div>
-            <div class="">3</div>
-            <div class="">/10</div>
+            <div class="text-amber-950">3</div>
+            <div class="text-[#9b896b]">/10</div>
           </div>
         </div>
 </template>
