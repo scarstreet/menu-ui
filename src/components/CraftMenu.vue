@@ -5,7 +5,8 @@
   <div class="w-[100%] h-[406px] overflow-y-scroll grid-cont">
     <div class="the-grid">
       <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
-      ${isOk(i) ?' craftable':''}`">
+      ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
+      ${isSelected(i) ? 'selected ' : ' '}`">
         <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-[25px] translate-x-5
         ${i.pinned?'':'opacity-0'}`">
           <svg
@@ -56,7 +57,7 @@
 <script>
 export default {
   name: 'CraftMenu',
-  props: { backpack: Array, mode: String },
+  props: { backpack: Array, mode: String, select: Array },
   methods: {
     isOk(item) {
       let isOk = true;
@@ -70,20 +71,28 @@ export default {
       });
       return isOk;
     },
+    isSelected(item) {
+      return item.selected && this.select === 'craft';
+    },
   },
   computed: {
     cCrafts() {
-      const arr = this.craftable.filter((x) => {
-        if (this.mode === '') {
-          return x;
-        } return x.categ === this.mode;
-      });
+      let arr = [];
+      if (this.mode === 'All')arr = this.craftable;
+      else {
+        arr = this.craftable.filter((x) => x.categ === this.mode);
+      }
       for (let i = arr.length; i < this.total; i += 1) {
         arr.push({
           // eslint-disable-next-line import/no-dynamic-require, global-require, prefer-template
           name: 'na', image: require('@/assets/w' + ((i % 4) + 1) + '.png'), pinned: false, req: [], desc: '',
         });
       }
+      arr.forEach((x, idx) => {
+        // eslint-disable-next-line no-param-reassign
+        if (idx === this.select[1]) x.selected = true;
+      });
+      console.log(this.select);
       return arr;
     },
   },
@@ -95,6 +104,7 @@ export default {
         image: require('../assets/27.png'),
         name: 'Elven Wisdom Bread',
         categ: 'Food',
+        selected: false,
         pinned: true,
         rewards: { cube: 10, hammer: 0 },
         req: [
@@ -109,6 +119,7 @@ export default {
         image: require('../assets/26.png'),
         name: 'Emberleaf Fern',
         categ: 'Plants',
+        selected: false,
         pinned: false,
         rewards: { cube: 0, hammer: 10 },
         req: [
@@ -122,6 +133,7 @@ export default {
         image: require('../assets/spell-scroll.svg'),
         name: "Scribe's Scroll of Knowledge",
         categ: 'Scrolls',
+        selected: false,
         pinned: false,
         rewards: { cube: 2, hammer: 10 },
         req: [
@@ -135,6 +147,7 @@ export default {
         image: require('../assets/14.png'),
         name: 'Starlight Blossom',
         categ: 'Plants',
+        selected: false,
         pinned: false,
         rewards: { cube: 30, hammer: 20 },
         req: [
@@ -148,6 +161,7 @@ export default {
         image: require('@/assets/11.png'),
         name: 'Healing Herb Salve',
         categ: 'Tonics',
+        selected: false,
         pinned: false,
         rewards: { cube: 10, hammer: 3 },
         req: [
@@ -162,6 +176,7 @@ export default {
         image: require('@/assets/21.png'),
         name: 'Enchanted Growth Potion',
         categ: 'Tonics',
+        selected: false,
         pinned: false,
         rewards: { cube: 3, hammer: 0 },
         req: [
@@ -175,6 +190,7 @@ export default {
         image: require('../assets/5.png'),
         name: 'Elemental Seeder',
         categ: 'Crops',
+        selected: false,
         pinned: true,
         rewards: { cube: 10, hammer: 10 },
         req: [
@@ -188,6 +204,7 @@ export default {
         image: require('../assets/21.png'),
         name: 'Nectar of Vitality',
         categ: 'Tonics',
+        selected: false,
         pinned: false,
         rewards: { cube: 4, hammer: 20 },
         req: [{ item: 'Golden Apple', amount: 100 }],
@@ -198,6 +215,7 @@ export default {
         image: require('../assets/9.png'),
         name: 'Arcane Reading Chair',
         categ: 'Furniture',
+        selected: false,
         pinned: false,
         rewards: { cube: 5, hammer: 10 },
         req: [
@@ -211,6 +229,7 @@ export default {
         image: require('../assets/19.png'),
         name: 'Feast of the Forest',
         categ: 'Food',
+        selected: false,
         pinned: false,
         rewards: { cube: 2, hammer: 0 },
         req: [
@@ -237,15 +256,16 @@ export default {
 .grid-object {
   @apply bg-white col-span-1 aspect-square rounded-3xl bg-opacity-10 h-[110px];
 }
-.grid-object.selected {
-  @apply border-4 border-solid border-white border-opacity-50;
+.selected {
+  @apply border-[6px] border-solid border-white border-opacity-100;
 }
 .craftable {
-  @apply bg-opacity-40;
+  @apply bg-opacity-80;
 }
-.grid-object.known {
-  @apply bg-opacity-20;
+.known {
+  @apply bg-opacity-50;
 }
+
 .grid-cont::-webkit-scrollbar {
   width: 8px; /* Width of the scrollbar */
   background-color: transparent; /* Make the scrollbar itself transparent */

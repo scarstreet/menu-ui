@@ -78,7 +78,7 @@ export default {
   @apply bg-white col-span-1 aspect-square rounded-2xl bg-opacity-10;
 }
 .grid-object.item {
-  @apply bg-opacity-30;
+  @apply bg-opacity-50;
 }
 
 .grid-object.selected {

@@ -40,7 +40,7 @@
       </div>
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
-          <CraftMenu :backpack="inventory" :mode="''" />
+          <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected" />
         </div>
         <div class="flex-1">
           <BackPack :inventory="inventory" />
@@ -78,6 +78,47 @@ export default {
       console.log(i);
       this.activeTop = i;
     },
+    navSide(axis, dir) {
+      if (axis === 'y' && this.selected[1] + dir >= 0 && this.selected[1] + dir < this.sideBtns.length) {
+        this.selected[1] += dir;
+        this.activeSide = this.sideBtns[this.selected[1]].lable;
+      } if (axis === 'x') {
+        this.selected = ['craft', -1, ''];
+      }
+    },
+    navTop(dir) {
+      if (this.activeTopId + dir >= 0 && this.activeTopId + dir < this.topBtns.length) {
+        this.activeTopId += dir;
+        this.activeTop = this.topBtns[this.activeTopId].label;
+      }
+    },
+    navCraft(axis, dir) {
+      console.log(axis, dir);
+      console.log(this.selected[0], this.selected[1], this.selected[2]);
+      if (
+        axis === 'x'
+        && dir === -1
+        && this.selected[1] % 8 === 0) {
+        // When go left on the leftmost col, return to side
+        this.selected = ['side', this.sideBtns.findIndex((x) => x.lable === this.activeSide), ''];
+      } else if (
+        axis === 'x'
+        && dir + this.selected[1] < 40
+        && dir + this.selected[1] >= 0) {
+        this.selected[1] += dir;
+      } else if (
+        axis === 'y'
+        && dir * 8 + this.selected[1] < 40
+        && dir * 8 + this.selected[1] >= 0) {
+        this.selected[1] += dir * 8;
+      } else if (
+        axis === 'y'
+        && dir === 1
+        && this.selected[1] > 32
+        && this.selected[1] <= 39) {
+        this.selected = ['backpack', 0, ''];
+      }
+    },
   },
   computed: {
     cSideBtns() {
@@ -94,15 +135,58 @@ export default {
       this.topBtns.forEach((x) => {
         const o = x;
         o.isActive = this.activeTop === o.label;
-        console.log(o);
         arr.push(o);
       });
       return arr;
     },
   },
+  created() {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 's') {
+        if (this.selected[0] === 'side') {
+          this.navSide('y', 1);
+        }
+        if (this.selected[0] === 'craft') {
+          this.navCraft('y', 1);
+        }
+      }
+      if (event.key === 'ArrowUp' || event.key === 'w') {
+        if (this.selected[0] === 'side') {
+          this.navSide('y', -1);
+        }
+        if (this.selected[0] === 'craft') {
+          this.navCraft('y', -1);
+        }
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'a') {
+        if (this.selected[0] === 'side') {
+          this.navSide('x', -1); // DO NOTHING!!
+        }
+        if (this.selected[0] === 'craft') {
+          this.navCraft('x', -1);
+        }
+      }
+      if (event.key === 'ArrowRight' || event.key === 'd') {
+        if (this.selected[0] === 'side') {
+          this.navSide('x', 1);
+        }
+        if (this.selected[0] === 'craft') {
+          this.navCraft('x', 1);
+        }
+      }
+      if (event.key === 'q') {
+        this.navTop(-1);
+      }
+      if (event.key === 'e') {
+        this.navTop(1);
+      }
+    });
+  },
   data: () => ({
+    selected: ['side', 0, ''],
     activeSide: 'All',
     activeTop: 'Crafting',
+    activeTopId: 3,
     sideBtns: [
       {
         lable: 'All',
