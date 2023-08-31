@@ -199,7 +199,6 @@ export default {
           parentContainer.scrollTop = 0; // Set the desired scroll position in pixels
         }
       }
-      console.log(arr);
       return arr;
     },
   },

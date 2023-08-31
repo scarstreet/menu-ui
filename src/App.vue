@@ -25,11 +25,13 @@
           <div class="text-xl text-[#9b896b]">1st Year</div>
           <div class="text-xl text-amber-50">Spring 5</div>
         </div>
-        <div class="flex flex-row items-center">
+        <div class="flex flex-row items-center justify-center">
           <img src="@/assets/coin.png" alt="" class="object-contain w-[4.16vw]">
-          <div class="bg-white bg-opacity-20 py-[.74vh]
-          pl-[1.56vw] pr-[1.04vw] rounded-xl h-[3.7vh] text-amber-50
-          -translate-x-[2vh] justify-center"><span>840</span></div>
+          <div class="bg-white bg-opacity-20
+          pl-[2vw] pr-[1.04vw] rounded-xl h-[3.7vh] text-amber-50
+          -translate-x-[2.5vw] justify-center items-center">
+          <div class="translate-y-[5px]">840</div>
+        </div>
         </div>
       </div>
     </div>
