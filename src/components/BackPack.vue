@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div class="w-[100%] grow pl-[40px] pr-[50px] pt-[10px] pb-[80px] h-[100%]">
     <div class="w-[100%] h-[406px] overflow-hidden bg-white bg-opacity-10
@@ -21,13 +22,14 @@
         <span class="ml-1"> Backpack </span>
       </div>
       <div class="the-grid pl-[20px]">
-        <div
+        <button
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
           :class="`grid-object flex flex-col items-center justify-center
           ${i.name==='na' || i.name==='locked'?'':'item'}
           ${i.name === 'locked'? 'locked':''}
           ${i.selected ? 'selected' : ''}`"
+          @click="changeSelect(['backpack',idx])"
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
           :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
@@ -35,7 +37,7 @@
             text-sm">
             {{ i.amount }}
           </div>
-        </div>
+        </button>
       </div>
     </div>
   </div>
@@ -46,6 +48,9 @@ export default {
   name: 'BackPack',
   props: { inventory: Array, select: Array },
   methods: {
+    changeSelect(i) {
+      this.$emit('change-select', i);
+    },
     isMulti(item) {
       if (item.amount > 1) {
         return 'multi';

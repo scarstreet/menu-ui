@@ -1,12 +1,14 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <!-- eslint-disable global-require -->
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
   <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont">
     <div class="the-grid h-[581px] overflow-y-hidden">
-      <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
+      <button v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
-      ${i.selected ? 'selected ' : ' '}`">
+      ${i.selected ? 'selected ' : ' '}`"
+      @click="changeSelect(['craft',idx])">
         <div :class="`flex justify-end w-[100%] rotate-45 -translate-y-[25px] translate-x-5
         ${i.pinned?'':'opacity-0'}`">
           <svg
@@ -69,7 +71,7 @@
             </svg>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -81,6 +83,9 @@ export default {
     backpack: Array, mode: String, select: Array, craftable: Array,
   },
   methods: {
+    changeSelect(i) {
+      this.$emit('change-select', i);
+    },
     isOk(item) {
       let isOk = true;
       if (item.name === 'na') return false;

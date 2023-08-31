@@ -36,20 +36,23 @@
     <div v-if="activeTop === 'Crafting'" class="content z-10">
       <div class="side-bar">
         <SideButton v-for="btn in cSideBtns" :key="btn.label"
-        :label="btn.label" :icon="btn.icon" :isActive="btn.isActive"  @change-side="changeSide" />
+        :label="btn.label" :icon="btn.icon" :isActive="btn.isActive" :currentMode="selected[0]"
+        @change-side="changeSide" />
       </div>
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
           <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected"
-          @set-craft="setCraftSelect" :craftable="craftable"/>
+          @set-craft="setCraftSelect" :craftable="craftable"
+          @change-select="changeSelect"/>
         </div>
         <div class="flex-1">
-          <BackPack :inventory="inventory" :select="selected" @set-backpack="setCraftSelect" />
+          <BackPack :inventory="inventory" :select="selected" @set-backpack="setCraftSelect"
+          @change-select="changeSelect"  />
         </div>
       </div>
       <div class="desc">
-        <DescCard :item="currentItem" :inventory="inventory" :mode="selected[0]" />
-        <CtrlBoard :select="selected" :item="currentItem" :canCraft="isCanCraft()" />
+        <DescCard :item="currentItem" :inventory="inventory" :mode="selected[0]"/>
+        <CtrlBoard :select="selected" :item="currentItem" :canCraft="isCanCraft()"/>
       </div>
     </div>
     <div v-else class="w-[100vw] h-[90vh] grow flex
@@ -145,10 +148,14 @@ export default {
     },
     changeSide(i) {
       this.activeSide = i;
+      this.selected = ['side', this.sideBtns.findIndex((ii) => ii.label === i)];
     },
     changeTop(i) {
       console.log(i);
       this.activeTop = i;
+    },
+    changeSelect(i) {
+      this.selected = i;
     },
     navSide(axis, dir) {
       if (axis === 'y' && this.selected[1] + dir >= 0 && this.selected[1] + dir < this.sideBtns.length) {
@@ -305,7 +312,7 @@ export default {
           }, 500);
         }
         if (event.key === 'Escape' && this.selected[0] === 'craft') {
-          this.selected = ['side', this.sideBtns.findIndex((x)=>x.label === this.activeSide)];
+          this.selected = ['side', this.sideBtns.findIndex((x) => x.label === this.activeSide)];
         }
       }
       if (event.key === 'q') {

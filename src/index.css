@@ -6,5 +6,10 @@
 
 * {
     font-family: 'Varela Round', sans-serif;
+    outline: none;
     @apply font-bold text-lg;
+}
+
+*:focus {
+    outline: none;
 }
