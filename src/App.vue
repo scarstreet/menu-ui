@@ -110,24 +110,26 @@ export default {
       return false;
     },
     craftItem() {
-      const temp = this.inventory;
-      const { req } = this.currentItem;
-      req.forEach((r) => {
-        const invIdx = this.inventory.findIndex((x) => x.name === r.item);
-        temp[invIdx].amount -= r.amount;
-      });
-      if (temp.findIndex((x) => x.name === this.currentItem.name) === -1) {
-        temp.push({
-          name: this.currentItem.name,
-          image: this.currentItem.image,
-          desc: this.currentItem.desc,
-          selected: false,
-          amount: 1,
+      if(this.isCanCraft()) {
+        const temp = this.inventory;
+        const { req } = this.currentItem;
+        req.forEach((r) => {
+          const invIdx = this.inventory.findIndex((x) => x.name === r.item);
+          temp[invIdx].amount -= r.amount;
         });
-      } else {
-        temp[temp.findIndex((x) => x.name === this.currentItem.name)].amount += 1;
+        if (temp.findIndex((x) => x.name === this.currentItem.name) === -1) {
+          temp.push({
+            name: this.currentItem.name,
+            image: this.currentItem.image,
+            desc: this.currentItem.desc,
+            selected: false,
+            amount: 1,
+          });
+        } else {
+          temp[temp.findIndex((x) => x.name === this.currentItem.name)].amount += 1;
+        }
+        this.inventory = temp;
       }
-      this.inventory = temp;
     },
     longCraftItem() {
       this.longProgress += 0.3;

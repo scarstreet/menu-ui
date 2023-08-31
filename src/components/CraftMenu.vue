@@ -65,7 +65,9 @@
           ${i.name === 'na' ? 'opacity-10' : ''}`" alt="" />
         </div>
         <div :class="`select-none flex justify-start
-        items-end -translate-y-[35px] ${isOk(i) ?'':'opacity-0'}`"
+        items-end
+        ${i.selected ? '-translate-y-[40px] -translate-x-[5px]' : '-translate-y-[35px]'}
+        ${isOk(i) ?'':'opacity-0'}`"
         style="pointer-events: none;">
           <div class="bg-white rounded-lg p-1">
             <svg

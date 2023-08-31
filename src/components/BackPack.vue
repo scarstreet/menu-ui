@@ -33,8 +33,9 @@
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
           :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
-          <div v-if="i.amount > 1" class="bg-[#eaceaf] rounded-md self-end w-[40px] text-center
-            text-sm">
+          <div v-if="i.amount > 1" :class="`bg-[#eaceaf] rounded-md
+          self-end w-[40px] text-center text-sm absolute
+          translate-y-[29px] ${i.selected ? 'translate-x-[7px]' : ''}`">
             {{ i.amount }}
           </div>
         </button>
