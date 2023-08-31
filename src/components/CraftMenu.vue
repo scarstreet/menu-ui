@@ -3,7 +3,7 @@
 <!-- eslint-disable global-require -->
 <template>
   <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont">
-    <div class="the-grid">
+    <div class="the-grid h-[581px] overflow-y-hidden">
       <div v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
       ${i.selected ? 'selected ' : ' '}`">
@@ -46,6 +46,26 @@
                 8.55 19.45 10.1 17.5 10.1Z
                 "
               />
+            </svg>
+          </div>
+        </div>
+        <div v-if="i.selected" class="fill-[#ddae62]">
+          <div class="relative -translate-x-[4px]">
+            <svg width="30" viewBox="0 0 400 400" class="-translate-y-[150px] translate-x-[100px]">
+                <polygon points="0 0, 200 0, 200 200" />
+            </svg>
+            <svg width="30" viewBox="0 0 400 400"
+            class="-translate-y-[195px] -translate-x-[5px] -rotate-90">
+                <polygon points="0 0, 200 0, 200 200" />
+            </svg>
+          </div>
+          <div class="relative rotate-180 -translate-y-[308px] translate-x-[4px]">
+            <svg width="30" viewBox="0 0 400 400" class="-translate-y-[150px] translate-x-[100px]">
+                <polygon points="0 0, 200 0, 200 200" />
+            </svg>
+            <svg width="30" viewBox="0 0 400 400"
+            class="-translate-y-[195px] -translate-x-[5px] -rotate-90">
+                <polygon points="0 0, 200 0, 200 200" />
             </svg>
           </div>
         </div>

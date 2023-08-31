@@ -31,15 +31,24 @@
           <div v-if="item.name !== 'na' && mode === 'craft'"
           class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
           <div v-if="item.name !== 'na' && mode === 'craft'">
-            <div v-for="(i,idx) in [1,2,3,4]" :key="'tesuto'+idx"
+            <div v-for="(i,idx) in mat" :key="'tesuto'+idx"
             :class="`flex-row flex w-[350px] h-[40px]
             items-center ${idx<3?'border-b-2':''} border-solid border-opacity-20
             border-[#9b896b] py-[30px]`">
-              <img src="../assets/2.png" class="object-contain w-[30px] h-[30px]" alt="" />
-              <div class="ml-3 text-[#9b896b]">Material Name</div>
+              <img :src="i.image" class="object-contain w-[30px] h-[30px]" alt="" />
+              <div class="ml-3 text-[#9b896b]">{{ i.item }}</div>
               <div class="grow"></div>
-              <div class="text-amber-950">3</div>
-              <div class="text-[#9b896b]">/10</div>
+              <div :class="`${i.have >= i.amount ?
+                'text-amber-950' : 'text-red-500'}`">{{ i.have }}</div>
+              <div class="text-[#9b896b]">/{{ i.amount }}</div>
+            </div>
+            <div v-for="i in 4 - mat.length" :key="'leftover'+i+'from'+item.name"
+            class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]
+            flex flex-row py-[15px]">
+              <div class="w-[20px] h-[20px] rounded-md bg-[#9b896b] bg-opacity-20"></div>
+              <div class="ml-3 w-[130px] h-[20px] rounded-md bg-[#9b896b] bg-opacity-20"></div>
+              <div class="grow"></div>
+              <div class="w-[40px] h-[20px] rounded-md bg-[#9b896b] bg-opacity-20"></div>
             </div>
           </div>
         </div>
@@ -52,6 +61,23 @@ export default {
     item: Object,
     mode: String,
     inventory: Array,
+  },
+  computed: {
+    mat() {
+      const mat = this.item.req;
+      for (let i = 0; i < mat.length; i += 1) {
+        mat[i].amount = this.item.req[i].amount;
+        mat[i].item = this.item.req[i].item;
+        mat[i].have = this.inventory[this.inventory.findIndex(
+          (x) => x.name === mat[i].item,
+        )].amount;
+        mat[i].image = this.inventory[this.inventory.findIndex(
+          (x) => x.name === mat[i].item,
+        )].image;
+      }
+      console.log(mat);
+      return mat;
+    },
   },
 };
 </script>
