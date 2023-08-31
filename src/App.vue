@@ -6,7 +6,7 @@
       </div>
       <div class="top-mid">
         <p
-          class="w-[30px] rounded-lg
+          class="w-[1.56vw] rounded-lg
           bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20"
         >
           Q
@@ -14,7 +14,7 @@
         <TopButton v-for="i in cTopBtns" :key="i.label" :label="i.label"
         :icon="i.icon" :isActive="i.isActive" @change-top="changeTop" />
         <p
-          class="w-[30px] rounded-lg
+          class="w-[1.56vw] rounded-lg
           bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20"
         >
           E
@@ -26,10 +26,10 @@
           <div class="text-xl text-amber-50">Spring 5</div>
         </div>
         <div class="flex flex-row items-center">
-          <img src="@/assets/coin.png" alt="" class="object-contain w-[80px]">
-          <div class="bg-white bg-opacity-20 py-[8px]
-          pl-[30px] pr-[20px] rounded-xl h-[40px] text-amber-50
-          -translate-x-[40px] justify-center"><span>840</span></div>
+          <img src="@/assets/coin.png" alt="" class="object-contain w-[4.16vw]">
+          <div class="bg-white bg-opacity-20 py-[.74vh]
+          pl-[1.56vw] pr-[1.04vw] rounded-xl h-[3.7vh] text-amber-50
+          -translate-x-[2vh] justify-center"><span>840</span></div>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
         @change-side="changeSide" />
       </div>
       <div class="crafting">
-        <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
+        <div class="flex-1 h-[45vh] pt-[4.63vh] pl-[2vh] pr-[1.04vw]">
           <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected"
           @set-craft="setCraftSelect" :craftable="craftable"
           @change-select="changeSelect"
@@ -62,13 +62,13 @@
     </div>
     <div class="background overflow-hidden"></div>
     <div v-if="isSpaceHold" class="fixed w-[100vw] z-20 flex flex-col justify-center
-    items-center text-amber-50 bottom-[40px]
-    drop-shadow-[0_0_30px_rgba(0,0,0,1)]">
+    items-center text-amber-50 bottom-[3.7vh]
+    drop-shadow-[0_0_1.56vw_rgba(0,0,0,1)]">
       Crafting
-      <div class="w-[50vw] h-[30px] flex flex-col bg-amber-50
+      <div class="w-[50vw] h-[2.77vh] flex flex-col bg-amber-50
     border-4 border-[#e6d1ac] rounded-2xl
     overflow-hidden items-start justify-start">
-        <div class="h-[30px] bg-[#ddae62]" ref="progress"></div>
+        <div class="h-[2.77vh] bg-[#ddae62]" ref="progress"></div>
       </div>
     </div>
   </div>
@@ -726,21 +726,22 @@ export default {
   @apply bg-black bg-opacity-60 w-[100vw] h-auto grow flex-row flex;
 }
 .side-bar {
-  @apply bg-black bg-opacity-10 h-auto w-[300px] flex-col flex pl-[60px] pt-[50px] pr-[30px];
+  @apply bg-black bg-opacity-10 h-auto w-[15.625vw] flex-col
+  flex pl-[3.13vw] pt-[4.63vh] pr-[1.56vw];
 }
 .crafting {
-  @apply h-[972.4px] w-auto flex-col flex;
+  @apply h-[90vh] w-auto flex-col flex;
 }
 .desc {
-  @apply h-auto w-[500px] flex-col flex mr-[30px];
+  @apply h-auto w-[26.04vw] flex-col flex mr-[1.56vw];
 }
 .top-left {
-  @apply flex  h-auto w-[300px] flex-col items-center justify-center ml-[30px];
+  @apply flex  h-auto w-[15.625vw] flex-col items-center justify-center ml-[1.56vw];
 }
 .top-mid {
   @apply flex  h-auto grow w-auto flex-row items-center justify-center;
 }
 .top-right {
-  @apply flex  h-auto w-[400px] flex-row items-center justify-end mr-[60px];
+  @apply flex  h-auto w-[20.83vw] flex-row items-center justify-end mr-[3.125vw];
 }
 </style>

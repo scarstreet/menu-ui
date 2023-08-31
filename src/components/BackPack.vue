@@ -1,9 +1,9 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div class="w-[100%] grow pl-[40px] pr-[50px] pt-[10px] pb-[80px] h-[100%]">
-    <div class="w-[100%] h-[406px] overflow-hidden bg-white bg-opacity-10
-    rounded-3xl p-[15px] flex flex-col">
-      <div class="text-amber-50 pl-[20px] flex-row flex items-end pb-3">
+  <div class="w-[100%] grow pl-[2vw] pr-[4.63vh] pt-[.926vh] pb-[7.4vh] h-[100%]">
+    <div class="w-[100%] h-[37.59vh] overflow-hidden bg-white bg-opacity-10
+    rounded-3xl p-[0.781vw] flex flex-col">
+      <div class="text-amber-50 pl-[1.04vw] flex-row flex items-end pb-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -21,7 +21,7 @@
         </svg>
         <span class="ml-1"> Backpack </span>
       </div>
-      <div class="the-grid pl-[20px]">
+      <div class="the-grid pl-[1.04vw]">
         <button
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
@@ -32,10 +32,10 @@
           @click="changeSelect(['backpack',idx])"
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
-          :src="i.image" alt="" class="w-[50px] h-[50px] object-contain" />
+          :src="i.image" alt="" class="w-[2.6vw] h-[4.63vh] object-contain" />
           <div v-if="i.amount > 1" :class="`bg-[#eaceaf] rounded-md
-          self-end w-[40px] text-center text-sm absolute
-          translate-y-[29px] ${i.selected ? 'translate-x-[7px]' : ''}`">
+          self-end w-[2vw] text-center text-sm absolute
+          translate-y-[2.685vh] ${i.selected ? 'translate-x-[.364vw]' : ''}`">
             {{ i.amount }}
           </div>
         </button>
@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 .the-grid {
-  @apply grid grid-flow-row-dense grid-cols-10 gap-2 overflow-y-hidden pr-[20px];
+  @apply grid grid-flow-row-dense grid-cols-10 gap-2 overflow-y-hidden pr-[1.04vw];
 }
 .grid-object {
   @apply bg-white col-span-1 aspect-square rounded-2xl bg-opacity-10;

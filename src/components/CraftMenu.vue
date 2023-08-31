@@ -3,25 +3,26 @@
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
-  <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont"
+  <div class="w-[100%] h-[37.5925vh] overflow-y-scroll overflow-x-hidden grid-cont"
   ref="craftGrid" id="craftGrid">
-    <div class="the-grid h-[581px] overflow-y-hidden overflow-x-hidden">
+    <div class="the-grid h-[53.7963vh] overflow-y-hidden overflow-x-hidden">
       <button v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object group
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
       ${i.selected ? 'selected ' : ' '}`"
       @click="changeSelect(['craft',idx])"
       :ref="'craftChild'+idx">
         <div v-if="i.name !== 'na'"
-        class="select-none flex flex-col absolute w-[110px] justify-center items-center z-20
-        translate-y-[90px] opacity-0 duration-200 group-hover:opacity-100"
+        class="select-none flex flex-col absolute w-[5.7291vw] justify-center items-center z-20
+        translate-y-[8.333vh] opacity-0 duration-200 group-hover:opacity-100"
         style="pointer-events: none;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 24 24" class="fill-amber-50 translate-y-[5px]"><title>triangle</title><path d="M1,21H23L12,2" /></svg>
-          <div class="w-min-[150px] bg-amber-50 z-30 rounded-xl
-          py-[8px] px-[15px] flex flex-col items-center justify-center text-amber-950 text-sm"
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.04vw" viewBox="0 0 24 24" class="fill-amber-50 translate-y-[0.463vh]"><title>triangle</title><path d="M1,21H23L12,2" /></svg>
+          <div class="w-min-[7.81vw] bg-amber-50 z-30 rounded-xl
+          py-[.74vh] px-[10.26041vw] flex flex-col items-center
+          justify-center text-amber-950 text-sm"
           style="white-space: nowrap;">
             {{ i.name }}
             <div class="flex flex-row space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" class="fill-[#ddae62]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1.04vw" class="fill-[#ddae62]">
                 <title>bag-personal-outline</title>
                 <path d="M16,5V4A2,2 0 0,0 14,2H10A2,2 0 0,0 8,
                 4V5A4,4 0 0,0 4,9V20A2,2 0 0,0 6,22H18A2,
@@ -30,7 +31,7 @@
                 15H6V9A2,2 0 0,1 8,7H16A2,2 0 0,1 18,9V15Z" />
               </svg>
               <div class="text-amber-950">{{ i.have }}</div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" class="fill-[#ddae62]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1.04vw" class="fill-[#ddae62]">
                 <title>hammer-wrench</title>
                 <path d="M13.78 15.3L19.78 21.3L21.89 19.14L15.89 13.14L13.78
                 15.3M17.5 10.1C17.11 10.1 16.69 10.05 16.36 9.91L4.97 21.25L2.86
@@ -46,7 +47,7 @@
           </div>
         </div>
         <div :class="`select-none flex justify-end w-[100%]
-        rotate-45 -translate-y-[25px] translate-x-5
+        rotate-45 -translate-y-[2.3148vh] translate-x-5
         ${i.pinned?'':'opacity-0'}`"
         style="pointer-events: none;">
           <svg
@@ -63,12 +64,12 @@
         <div class="select-none w-[100%] flex justify-center items-center"
         style="pointer-events: none;">
           <img
-          :src="i.image" :class="`w-[80px] h-[80px] object-contain -translate-y-[20px]
+          :src="i.image" :class="`w-[4.16vw] h-[7.4vh] object-contain -translate-y-[1.85vh]
           ${i.name === 'na' ? 'opacity-10' : ''}`" alt="" />
         </div>
         <div :class="`select-none flex justify-start
         items-end
-        ${i.selected ? '-translate-y-[40px] -translate-x-[5px]' : '-translate-y-[35px]'}
+        ${i.selected ? '-translate-y-[3.7vh] -translate-x-[0.26041vw]' : '-translate-y-[3.2407vh]'}
         ${isOk(i) ?'':'opacity-0'}`"
         style="pointer-events: none;">
           <div class="bg-white rounded-lg p-1">
@@ -96,21 +97,23 @@
         </div>
         <div v-if="i.selected" class="fill-[#ddae62]"
         style="pointer-events: none;">
-          <div class="relative -translate-x-[4px]">
-            <svg width="30" viewBox="0 0 400 400" class="-translate-y-[150px] translate-x-[100px]">
+          <div class="relative -translate-x-[.208vw]">
+            <svg width="30" viewBox="0 0 400 400"
+            class="-translate-y-[13.88vh] translate-x-[5.20833vw]">
                 <polygon points="0 0, 200 0, 200 200" />
             </svg>
             <svg width="30" viewBox="0 0 400 400"
-            class="-translate-y-[195px] -translate-x-[5px] -rotate-90">
+            class="-translate-y-[18.056vh] -translate-x-[0.26041vw] -rotate-90">
                 <polygon points="0 0, 200 0, 200 200" />
             </svg>
           </div>
-          <div class="relative rotate-180 -translate-y-[308px] translate-x-[4px]">
-            <svg width="30" viewBox="0 0 400 400" class="-translate-y-[150px] translate-x-[100px]">
+          <div class="relative rotate-180 -translate-y-[28.2407vh] translate-x-[.208vw]">
+            <svg width="30" viewBox="0 0 400 400"
+            class="-translate-y-[13.88vh] translate-x-[5.20833vw]">
                 <polygon points="0 0, 200 0, 200 200" />
             </svg>
             <svg width="30" viewBox="0 0 400 400"
-            class="-translate-y-[195px] -translate-x-[5px] -rotate-90">
+            class="-translate-y-[18.056vh] -translate-x-[0.26041vw] -rotate-90">
                 <polygon points="0 0, 200 0, 200 200" />
             </svg>
           </div>
@@ -230,13 +233,13 @@ export default {
 
 <style scoped>
 .the-grid {
-  @apply grid grid-flow-row-dense grid-cols-8 gap-2 pr-[20px];
+  @apply grid grid-flow-row-dense grid-cols-8 gap-2 pr-[1.04vw];
 }
 .grid-object {
-  @apply bg-white col-span-1 aspect-square rounded-3xl bg-opacity-10 h-[110px];
+  @apply bg-white col-span-1 aspect-square rounded-3xl bg-opacity-10 h-[10.1851vh];
 }
 .selected {
-  @apply border-[6px] border-solid border-white border-opacity-100;
+  @apply border-[.3125vw] border-solid border-white border-opacity-100;
 }
 .craftable {
   @apply bg-opacity-80;
@@ -246,7 +249,7 @@ export default {
 }
 
 .grid-cont::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: .74vh; /* Width of the scrollbar */
   background-color: transparent; /* Make the scrollbar itself transparent */
 }
 
@@ -262,6 +265,6 @@ export default {
 /* Style the scrollbar track to have a background color */
 .grid-cont::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.1); /* Color of the track */
-  border-radius: 4px;
+  border-radius: .208vw;
 }
 </style>

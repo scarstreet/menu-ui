@@ -5,8 +5,8 @@
         <title>lightning-bolt</title>
         <path d="M11 15H6L13 1V9H18L11 23V15Z" class="fill-white" />
       </svg>
-      <div class="w-[130px] h-[20px] border border-white rounded-2xl overflow-hidden mr-3">
-        <div class="bg-emerald-500 w-[60%] h-[30px]"></div>
+      <div class="w-[6.77vw] h-[1.85vh] border border-white rounded-2xl overflow-hidden mr-3">
+        <div class="bg-emerald-500 w-[60%] h-[2.77vh]"></div>
       </div>
       <div class="text-sm ml-2 text-amber-50">252</div>
       <div class="text-sm ml-1 text-[#9b896b]">/420</div>
@@ -21,8 +21,8 @@
           class="fill-white"
         />
       </svg>
-      <div class="w-[130px] h-[12px] border border-white rounded-2xl overflow-hidden mr-3">
-        <div class="bg-[#adbd45] w-[100%] h-[20px]"></div>
+      <div class="w-[6.77vw] h-[1.111vh] border border-white rounded-2xl overflow-hidden mr-3">
+        <div class="bg-[#adbd45] w-[100%] h-[1.85vh]"></div>
       </div>
       <div class="text-sm ml-2 text-amber-50">400</div>
       <div class="text-sm ml-1 text-[#9b896b]">/400</div>

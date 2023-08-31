@@ -30,7 +30,7 @@ export default {
 
 <style scoped>
 .side-btn {
-  @apply h-[80px] w-auto mb-1 bg-amber-50 rounded-2xl bg-opacity-0 mb-2
+  @apply h-[7.4vh] w-auto mb-1 bg-amber-50 rounded-2xl bg-opacity-0 mb-2
   border-2 border-solid border-amber-50 border-opacity-50 hover:border-opacity-100
 text-black flex flex-row items-center justify-center;
   @apply hover:bg-opacity-100 duration-300;
