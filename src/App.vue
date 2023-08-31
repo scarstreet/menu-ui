@@ -110,7 +110,7 @@ export default {
       return false;
     },
     craftItem() {
-      if(this.isCanCraft()) {
+      if (this.isCanCraft()) {
         const temp = this.inventory;
         const { req } = this.currentItem;
         req.forEach((r) => {
@@ -304,7 +304,11 @@ export default {
         }
         if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
           const temp = this.craftable;
-          temp[this.selected[1]].pinned = !temp[this.selected[1]].pinned;
+          temp[
+            this.craftable.findIndex((x) => x.name === this.currentItem.name)
+          ].pinned = !temp[
+            this.craftable.findIndex((x) => x.name === this.currentItem.name)
+          ].pinned;
           this.craftable = temp;
         }
         if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
@@ -330,12 +334,14 @@ export default {
         if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
           // Normal crafting
           this.craftItem();
+          this.longProgress = 0;
           clearTimeout(this.longPressTimeout);
           clearTimeout(this.craftOneTimeout);
         }
         if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold) {
           // Stop hold crafting
           this.isSpaceHold = false;
+          this.longProgress = 0;
           clearTimeout(this.craftOneTimeout);
           clearTimeout(this.longPressTimeout);
         }
