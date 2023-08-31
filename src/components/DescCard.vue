@@ -14,7 +14,7 @@
           class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
           <div class="w-[100%] my-3 text-[#9b896b] overflow-clip">
             {{ item.name !== 'na' && mode !== 'side' ? item.desc.substring(0,150) : '' }}
-            {{ item.desc.length && mode !== 'side' > 150 ? '...' : '' }}
+            {{ item.desc.length > 150 && mode === 'craft'? '...' : '' }}
           </div>
           <div v-if="item.name !== 'na' && mode === 'craft'"
           class="flex flex-row w-[100%] justify-start mb-4">
@@ -69,9 +69,15 @@ export default {
       for (let i = 0; i < mat.length; i += 1) {
         mat[i].amount = this.item.req[i].amount;
         mat[i].item = this.item.req[i].item;
-        mat[i].have = this.inventory[this.inventory.findIndex(
+        if (this.inventory.findIndex(
           (x) => x.name === mat[i].item,
-        )].amount;
+        ) !== -1) {
+          mat[i].have = this.inventory[this.inventory.findIndex(
+            (x) => x.name === mat[i].item,
+          )].amount;
+        } else {
+          mat[i].have = 0;
+        }
         mat[i].image = this.inventory[this.inventory.findIndex(
           (x) => x.name === mat[i].item,
         )].image;

@@ -41,7 +41,7 @@
       <div class="crafting">
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
           <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected"
-          @set-craft="setCraftSelect"/>
+          @set-craft="setCraftSelect" :craftable="craftable"/>
         </div>
         <div class="flex-1">
           <BackPack :inventory="inventory" :select="selected" @set-backpack="setCraftSelect" />
@@ -49,10 +49,19 @@
       </div>
       <div class="desc">
         <DescCard :item="currentItem" :inventory="inventory" :mode="selected[0]" />
-        <CtrlBoard :select="selected" :item="currentItem" />
+        <CtrlBoard :select="selected" :item="currentItem" :canCraft="isCanCraft()" />
       </div>
     </div>
     <div class="background overflow-hidden"></div>
+    <div class="fixed w-[100vw] flex flex-col justify-center
+    items-center text-amber-50 bottom-[40px]">
+      Crafting
+      <div class="w-[50vw] h-[30px] flex flex-col bg-amber-50
+    border-4 border-[#e6d1ac] z-10 rounded-2xl
+    overflow-hidden items-start justify-start">
+        <div class="h-[30px] bg-[#ddae62]" ref="progress"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -72,6 +81,59 @@ export default {
     SideButton, StatusBars, TopButton, CraftMenu, BackPack, DescCard, CtrlBoard,
   },
   methods: {
+    isCanCraft() {
+      if (this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
+        const { req } = this.currentItem;
+        if (req === undefined) return false;
+        let isOk = true;
+        req.forEach((r) => {
+          if (this.inventory.findIndex((x) => x.name === r.item) === -1) {
+            isOk = false;
+          } else {
+            const inInv = this.inventory[this.inventory.findIndex((x) => x.name === r.item)].amount;
+            if (r.amount > inInv) {
+              isOk = false;
+            }
+          }
+        });
+        return isOk;
+      }
+      return false;
+    },
+    craftItem() {
+      const temp = this.inventory;
+      const { req } = this.currentItem;
+      req.forEach((r) => {
+        const invIdx = this.inventory.findIndex((x) => x.name === r.item);
+        temp[invIdx].amount -= r.amount;
+      });
+      if (temp.findIndex((x) => x.name === this.currentItem.name) === -1) {
+        temp.push({
+          name: this.currentItem.name,
+          image: this.currentItem.image,
+          desc: this.currentItem.desc,
+          selected: false,
+          amount: 1,
+        });
+      } else {
+        temp[temp.findIndex((x) => x.name === this.currentItem.name)].amount += 1;
+      }
+      // temp = temp.filter((x) => x.amount > 0);
+      this.inventory = temp;
+      console.log('KREFTING TIMEEE');
+    },
+    longCraftItem() {
+      let progress = 0;
+      this.craftOneTimeout = setTimeout(() => {
+        progress += 1;
+        const { bar } = this.$refs;
+        bar.style.width = `${progress}%`;
+        if (progress === 100) {
+          this.craftItem();
+          progress = 0;
+        }
+      }, 30);
+    },
     changeSide(i) {
       this.activeSide = i;
     },
@@ -217,16 +279,42 @@ export default {
           this.navBackpack('x', 1);
         }
       }
+      if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
+        const temp = this.craftable;
+        temp[this.selected[1]].pinned = !temp[this.selected[1]].pinned;
+        this.craftable = temp;
+      }
+      if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold === false) {
+        this.longPressTimeout = setTimeout(() => {
+          if (!this.isSpaceHold) {
+            this.isSpaceHold = true;
+            this.longCraftItem();
+          }
+          console.log('LONG CRAFTTTTTTTTTT');
+        }, 3000);
+      }
       if (event.key === 'q') {
         this.navTop(-1);
       }
       if (event.key === 'e') {
         this.navTop(1);
       }
-      if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
-        this.$emit('toggle-pin');
+      // console.log(this.selected);
+    });
+    document.addEventListener('keyup', (event) => {
+      if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
+        // Normal crafting
+        this.craftItem();
+        clearTimeout(this.longPressTimeout);
+        clearTimeout(this.craftOneTimeout);
       }
-      console.log(this.selected);
+      if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold) {
+        // Stop hold crafting
+        this.isSpaceHold = false;
+        this.craftItem();
+        clearTimeout(this.longPressTimeout);
+        clearTimeout(this.craftOneTimeout);
+      }
     });
   },
   data: () => ({
@@ -234,6 +322,8 @@ export default {
     activeSide: 'All',
     activeTop: 'Crafting',
     activeTopId: 3,
+    isSpaceHold: false,
+    spaceStart: '',
     currentItem: {
       // eslint-disable-next-line global-require
       name: 'na', image: require('@/assets/w1.png'), pinned: false, req: [], desc: '', selected: false,
@@ -438,6 +528,147 @@ export default {
         categ: 'Food',
         amount: 16,
         desc: "Fresh, creamy cow's milk in a wooden bucket.",
+      },
+    ],
+    craftable: [
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/27.png'),
+        name: 'Elven Wisdom Bread',
+        categ: 'Food',
+        selected: false,
+        pinned: true,
+        rewards: { cube: 10, hammer: 0 },
+        req: [
+          { item: 'Wheat', amount: 9 },
+          { item: 'Golden Apple', amount: 1 },
+          { item: 'Milk', amount: 9 },
+        ],
+        desc: 'Crafted using ancient elven recipes, this bread imparts wisdom to those who consume it. Partaking in its flavors enhances intelligence and problem-solving skills, making it a favorite among scholars and strategists.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/26.png'),
+        name: 'Emberleaf Fern',
+        categ: 'Plants',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 0, hammer: 10 },
+        req: [
+          { item: 'Golden Apple', amount: 4 },
+          { item: 'Pumpkin', amount: 20 },
+        ],
+        desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/spell-scroll.svg'),
+        name: "Scribe's Scroll of Knowledge",
+        categ: 'Scrolls',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 2, hammer: 10 },
+        req: [
+          { item: 'Wood', amount: 6 },
+          { item: 'Golden Apple', amount: 10 },
+        ],
+        desc: 'Inscribed with intricate symbols, this scroll contains condensed wisdom and forgotten lore. When read, it imparts knowledge on various topics, from history to arcane arts, making it an invaluable resource for inquisitive minds.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/14.png'),
+        name: 'Starlight Blossom',
+        categ: 'Plants',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 30, hammer: 20 },
+        req: [
+          { item: 'Peas', amount: 40 },
+          { item: 'Golden Apple', amount: 3 },
+        ],
+        desc: 'The elusive Starlight Blossom is a radiant flower that only blooms under the light of a full moon. Its petals shimmer with a soft, ethereal glow, and when harvested, they can be used as a key ingredient in crafting potent potions that enhance magical abilities.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/11.png'),
+        name: 'Healing Herb Salve',
+        categ: 'Tonics',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 10, hammer: 3 },
+        req: [
+          { item: 'Golden Apple', amount: 5 },
+          { item: 'Peas', amount: 16 },
+          { item: 'Carrot', amount: 12 },
+        ],
+        desc: 'This soothing salve is crafted from common herbs. When applied, it accelerates natural healing processes, restoring a portion of health over time.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/21.png'),
+        name: 'Enchanted Growth Potion',
+        categ: 'Tonics',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 3, hammer: 0 },
+        req: [
+          { item: 'Milk', amount: 16 },
+          { item: 'Golden Apple', amount: 10 },
+        ],
+        desc: 'Brewed with magical ingredients, this potion stimulates plant growth. When sprinkled on crops or plants, they flourish rapidly, yielding bountiful harvests.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/5.png'),
+        name: 'Elemental Seeder',
+        categ: 'Crops',
+        selected: false,
+        pinned: true,
+        rewards: { cube: 10, hammer: 10 },
+        req: [
+          { item: 'Shovel', amount: 1 },
+          { item: 'Golden Apple', amount: 40 },
+        ],
+        desc: 'This mystical device, when activated with the right materials, allows you to plant elemental-infused crops. These crops harness the power of fire, ice, or lightning, granting unique magical properties when harvested.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/21.png'),
+        name: 'Nectar of Vitality',
+        categ: 'Tonics',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 4, hammer: 20 },
+        req: [{ item: 'Golden Apple', amount: 100 }],
+        desc: 'Distilled from the nectar of ancient plants, this tonic revitalizes the body and mind. It temporarily boosts strength, agility, and focus, making it a favored choice among adventurers facing formidable challenges.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/9.png'),
+        name: 'Arcane Reading Chair',
+        categ: 'Furniture',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 5, hammer: 10 },
+        req: [
+          { item: 'Golden Apple', amount: 50 },
+          { item: 'Wood', amount: 120 },
+        ],
+        desc: 'This meticulously crafted chair is designed for scholars and magic users. Its enchantments provide comfort during long study sessions and grant a clearer connection to magical energies, enhancing the speed of spell research.',
+      },
+      {
+        // eslint-disable-next-line global-require
+        image: require('@/assets/19.png'),
+        name: 'Feast of the Forest',
+        categ: 'Food',
+        selected: false,
+        pinned: false,
+        rewards: { cube: 2, hammer: 0 },
+        req: [
+          { item: 'Peas', amount: 1 },
+          { item: 'Beet', amount: 1 },
+        ],
+        desc: "Culinary mastery meets nature's bounty in this feast. Prepared using ingredients sourced from the depths of the forest, consuming it replenishes health, grants temporary stamina, and fosters a strong connection with the natural world.",
       },
     ],
   }),
