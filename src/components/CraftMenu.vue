@@ -3,12 +3,14 @@
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
-  <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont">
-    <div class="the-grid h-[581px] overflow-y-hidden">
+  <div class="w-[100%] h-[406px] overflow-y-scroll overflow-x-hidden grid-cont"
+  ref="craftGrid" id="craftGrid">
+    <div class="the-grid h-[581px] overflow-y-hidden overflow-x-hidden">
       <button v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object group
       ${isOk(i) ?' craftable': i.name !== 'na' ? ' known ' : ' '}
       ${i.selected ? 'selected ' : ' '}`"
-      @click="changeSelect(['craft',idx])">
+      @click="changeSelect(['craft',idx])"
+      :ref="'craftChild'+idx">
         <div v-if="i.name !== 'na'"
         class="select-none flex flex-col absolute w-[110px] justify-center items-center z-20
         translate-y-[90px] opacity-0 duration-200 group-hover:opacity-100"
@@ -182,6 +184,7 @@ export default {
           name: 'na', image: require('@/assets/w' + ((i % 4) + 1) + '.png'), pinned: false, req: [], desc: '', selected: false,
         });
       }
+      let hasSelected = false;
       for (let i = 0; i < 40; i += 1) {
         const index = this.backpack.findIndex((x) => x.label === arr[i].name);
         if (index !== -1) {
@@ -191,7 +194,21 @@ export default {
         }
         arr[i].canMake = this.amountCraftable(arr[i]);
         arr[i].selected = i === this.select[1] && this.select[0] === 'craft';
-        if (arr[i].selected) this.$emit('set-craft', arr[i]);
+        if (arr[i].selected) {
+          const parentContainer = document.getElementById('craftGrid');
+          if (parentContainer) {
+            parentContainer.scrollTop = (
+              Math.floor(i / 8)) * 100; // Set the desired scroll position in pixels
+          }
+          hasSelected = true;
+          this.$emit('set-craft', arr[i]);
+        }
+      }
+      if (!hasSelected) {
+        const parentContainer = document.getElementById('craftGrid');
+        if (parentContainer) {
+          parentContainer.scrollTop = 0; // Set the desired scroll position in pixels
+        }
       }
       return arr;
     },
