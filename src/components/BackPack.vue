@@ -1,9 +1,8 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div class="w-[100%] grow pl-[2vw] pr-[4.63vh] pt-[.926vh] pb-[7.4vh] h-[100%]">
-    <div class="w-[100%] h-[37.59vh] overflow-hidden bg-white bg-opacity-10
-    rounded-3xl p-[0.781vw] flex flex-col">
-      <div class="text-amber-50 pl-[1.04vw] flex-row flex items-end pb-3">
+  <div class="backpack-contents">
+    <div class="backpack-content-wrapper">
+      <div class="backpack-title">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -25,7 +24,7 @@
         <button
           v-for="(i, idx) in cInventory"
           :key="'inventory' + idx"
-          :class="`grid-object flex flex-col items-center justify-center
+          :class="`grid-object
           ${i.name==='na' || i.name==='locked'?'':'item'}
           ${i.name === 'locked'? 'locked':''}
           ${i.selected ? 'selected' : ''}`"
@@ -33,9 +32,8 @@
         >
           <img v-if="i.name !== 'na' && i.name !== 'locked'"
           :src="i.image" alt="" class="w-[2.6vw] h-[4.63vh] object-contain" />
-          <div v-if="i.amount > 1" :class="`bg-[#eaceaf] rounded-md
-          self-end w-[2vw] text-center text-sm absolute
-          translate-y-[2.685vh] ${i.selected ? 'translate-x-[.364vw]' : ''}`">
+          <div v-if="i.amount > 1" :class="`object-amount
+          ${i.selected ? 'translate-x-[.364vw]' : ''}`">
             {{ i.amount }}
           </div>
         </button>
@@ -100,7 +98,8 @@ export default {
   @apply grid grid-flow-row-dense grid-cols-10 grid-rows-4 gap-2 overflow-y-hidden pr-[1.04vw];
 }
 .grid-object {
-  @apply bg-white col-span-1 py-[1em] rounded-2xl bg-opacity-10;
+  @apply bg-white col-span-1 py-[1em] rounded-2xl
+  bg-opacity-10 flex flex-col items-center justify-center;
 }
 .grid-object.item {
   @apply bg-opacity-50;
@@ -111,5 +110,20 @@ export default {
 }
 .grid-object.locked {
   @apply rounded-full aspect-square scale-[.20];
+}
+.object-amount {
+  @apply bg-[#eaceaf] rounded-md
+    self-end w-[2vw] text-center text-sm absolute
+    translate-y-[2.685vh];
+}
+.backpack-contents {
+  @apply w-[100%] grow pl-[2vw] pr-[4.63vh] pt-[.926vh] pb-[7.4vh] h-[100%];
+}
+.backpack-content-wrapper {
+  @apply w-[100%] h-[37.59vh] overflow-hidden bg-white bg-opacity-10
+    rounded-3xl p-[0.781vw] flex flex-col;
+}
+.backpack-title {
+  @apply text-amber-50 pl-[1.04vw] flex-row flex items-end pb-3;
 }
 </style>

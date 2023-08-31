@@ -1,18 +1,17 @@
 <template>
-  <div class="bg-amber-50 rounded-3xl h-auto grow mr-[2vh] mt-[4.63vh] mb-[2.77vh]
-        flex flex-col p-[3.125vw] pb-[2.77vh] items-center">
+  <div class="desc-container">
           <img :src="item.name !== 'na' && mode !== 'side' ?
           item.image : require('@/assets/w1.png')"
-          class="w-[10.42vh] h-[10.42vh] object-contain" alt="" />
-          <div class="w-[100%] text-2xl text-amber-950 first-letter:capitalize">
+          class="desc-image" alt="" />
+          <div class="desc-title">
             {{ item.name !== 'na' && mode !== 'side' ?  item.name : ''}}
           </div>
           <div class="w-[100%] text-xl mb-3 text-[#ddae62]">
             {{ item.name !== 'na' && mode !== 'side' ? item.categ : ''}}
           </div>
           <div v-if="item.name !== 'na' && mode !== 'side'"
-          class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
-          <div class="w-[100%] my-3 text-[#9b896b] overflow-clip">
+          class="borderr"></div>
+          <div class="desc-desc">
             {{ item.name !== 'na' && mode !== 'side' ? item.desc.substring(0,150) : '' }}
             {{ item.desc.length > 150 && mode === 'craft'? '...' : '' }}
           </div>
@@ -30,12 +29,10 @@
           </div>
           </div>
           <div v-if="item.name !== 'na' && mode === 'craft'"
-          class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
+          class="borderr"></div>
           <div v-if="item.name !== 'na' && mode === 'craft'">
-            <div v-for="(i,idx) in mat" :key="'tesuto'+idx"
-            :class="`flex-row flex w-[18.23vw] h-[3.7vh]
-            items-center ${idx<3?'border-b-2':''} border-solid border-opacity-20
-            border-[#9b896b] py-[2.77vh]`">
+            <div v-for="(i,idx) in mat" :key="'mat'+idx"
+            :class="`mat-item ${idx<3?'border-b-2':''}`">
               <img :src="i.image" class="object-contain w-[1.56vw] h-[2.77vh]" alt="" />
               <div class="ml-3 text-[#9b896b]">{{ i.item }}</div>
               <div class="grow"></div>
@@ -44,8 +41,7 @@
               <div class="text-[#9b896b]">/{{ i.amount }}</div>
             </div>
             <div v-for="i in 4 - mat.length" :key="'leftover'+i+'from'+item.name"
-            class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]
-            flex flex-row py-[1.39vh]">
+            class="mat-residu">
               <div class="w-[1.04vw] h-[1.85vh] rounded-md bg-[#9b896b] bg-opacity-20"></div>
               <div class="ml-3 w-[11.56vw] h-[1.85vh] rounded-md bg-[#9b896b] bg-opacity-20"></div>
               <div class="grow"></div>
@@ -88,14 +84,29 @@ export default {
 };
 </script>
 
-<style>
-.no-img {
-    @apply w-[1.56vw] h-[2.77vh] rounded-md bg-[#9b896b];
+<style scoped>
+.desc-container {
+  @apply bg-amber-50 rounded-3xl h-auto grow mr-[2vh] mt-[4.63vh] mb-[2.77vh]
+    flex flex-col p-[3.125vw] pb-[2.77vh] items-center;
 }
-.no-name {
-    @apply w-[6.77vw] h-[2.77vh] rounded-md bg-[#9b896b];
+.desc-title {
+  @apply w-[100%] text-2xl text-amber-950 first-letter:capitalize;
 }
-.no-material {
-    @apply w-[3.125vw] h-[2.77vh] rounded-md bg-[#9b896b];
+.desc-image {
+  @apply w-[10.42vh] h-[10.42vh] object-contain;
+}
+.desc-desc {
+  @apply w-[100%] my-3 text-[#9b896b] overflow-clip;
+}
+.borderr {
+  @apply border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%];
+}
+.mat-item {
+  @apply flex-row flex w-[18.23vw] h-[3.7vh]
+    items-center  border-solid border-opacity-20 border-[#9b896b] py-[2.77vh];
+}
+.mat-residu {
+  @apply border-t-2 border-solid border-[#9b896b] border-opacity-20
+    w-[100%] flex flex-row py-[1.39vh];
 }
 </style>

@@ -5,20 +5,10 @@
         <StatusBars />
       </div>
       <div class="top-mid">
-        <p
-          class="w-[1.56vw] rounded-lg
-          bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20"
-        >
-          Q
-        </p>
+        <p class="top-keys"> Q </p>
         <TopButton v-for="i in cTopBtns" :key="i.label" :label="i.label"
         :icon="i.icon" :isActive="i.isActive" @change-top="changeTop" />
-        <p
-          class="w-[1.56vw] rounded-lg
-          bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20"
-        >
-          E
-        </p>
+        <p class="top-keys"> E </p>
       </div>
       <div class="top-right">
         <div class="flex flex-col justify-center items-end" style="white-space: nowrap;">
@@ -27,9 +17,7 @@
         </div>
         <div class="flex flex-row items-center justify-center">
           <img src="@/assets/coin.png" alt="" class="object-contain w-[4.16vw]">
-          <div class="bg-white bg-opacity-20
-          pl-[2vw] pr-[1.04vw] rounded-xl h-[3.7vh] text-amber-50
-          -translate-x-[2.5vw] justify-center items-center">
+          <div class="money">
           <div class="translate-y-[5px]">840</div>
         </div>
         </div>
@@ -58,18 +46,13 @@
         <CtrlBoard :select="selected" :item="currentItem" :canCraft="isCanCraft()"/>
       </div>
     </div>
-    <div v-else class="w-[100vw] h-[90vh] grow flex
-    items-center justify-center z-10 bg-black text-2xl text-amber-50 bg-opacity-60">
+    <div v-else class="other-window">
       {{ activeTop }} is still under construction...
     </div>
     <div class="background overflow-hidden"></div>
-    <div v-if="isSpaceHold" class="fixed w-[100vw] z-20 flex flex-col justify-center
-    items-center text-amber-50 bottom-[3.7vh]
-    drop-shadow-[0_0_1.56vw_rgba(0,0,0,1)]">
+    <div v-if="isSpaceHold" class="craft-popup">
       Crafting
-      <div class="w-[50vw] h-[2.77vh] flex flex-col bg-amber-50
-    border-4 border-[#e6d1ac] rounded-2xl
-    overflow-hidden items-start justify-start">
+      <div class="craft-bar">
         <div class="h-[2.77vh] bg-[#ddae62]" ref="progress"></div>
       </div>
     </div>
@@ -702,5 +685,28 @@ export default {
 }
 .top-right {
   @apply flex  h-auto w-[20.83vw] flex-row items-center justify-end mr-[3.125vw];
+}
+.top-keys {
+  @apply w-[1.56vw] rounded-lg
+  bg-white text-center font-extrabold text-white bg-opacity-10 text-opacity-20;
+}
+.money {
+  @apply bg-white bg-opacity-20
+    pl-[2vw] pr-[1.04vw] rounded-xl h-[3.7vh] text-amber-50
+    -translate-x-[2.5vw] justify-center items-center;
+}
+.other-window {
+  @apply w-[100vw] h-[90vh] grow flex
+    items-center justify-center z-10 bg-black text-2xl text-amber-50 bg-opacity-60;
+}
+.craft-popup {
+  @apply fixed w-[100vw] z-20 flex flex-col justify-center
+    items-center text-amber-50 bottom-[3.7vh]
+    drop-shadow-[0_0_1.56vw_rgba(0,0,0,1)];
+}
+.craft-bar {
+  @apply w-[50vw] h-[2.77vh] flex flex-col bg-amber-50
+    border-4 border-[#e6d1ac] rounded-2xl
+    overflow-hidden items-start justify-start;
 }
 </style>
