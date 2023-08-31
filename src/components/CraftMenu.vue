@@ -119,6 +119,9 @@ export default {
       return arr;
     },
   },
+  created() {
+    this.$on('toggle-pin', () => { console.log('AAAAAAAAAAAAAAAAAA'); });
+  },
   data: () => ({
     total: 40,
     craftable: [

@@ -49,7 +49,7 @@
       </div>
       <div class="desc">
         <DescCard :item="currentItem" :inventory="inventory" :mode="selected[0]" />
-        <CtrlBoard />
+        <CtrlBoard :select="selected" :item="currentItem" />
       </div>
     </div>
     <div class="background overflow-hidden"></div>
@@ -222,6 +222,9 @@ export default {
       }
       if (event.key === 'e') {
         this.navTop(1);
+      }
+      if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
+        this.$emit('toggle-pin');
       }
       console.log(this.selected);
     });

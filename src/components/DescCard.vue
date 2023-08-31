@@ -1,19 +1,20 @@
 <template>
   <div class="bg-amber-50 rounded-3xl h-auto grow mr-[40px] mt-[50px] mb-[30px]
         flex flex-col p-[60px] pb-[30px] items-center">
-          <img :src="item.name !== 'na' ? item.image : require('@/assets/w1.png')"
+          <img :src="item.name !== 'na' && mode !== 'side' ?
+          item.image : require('@/assets/w1.png')"
           class="w-[200px] h-[200px] object-contain" alt="" />
           <div class="w-[100%] text-2xl text-amber-950 first-letter:capitalize">
-            {{ item.name !== 'na' ? item.name : ''}}
+            {{ item.name !== 'na' && mode !== 'side' ?  item.name : ''}}
           </div>
           <div class="w-[100%] text-xl mb-3 text-[#ddae62]">
-            {{ item.name !== 'na' ? item.categ : ''}}
+            {{ item.name !== 'na' && mode !== 'side' ? item.categ : ''}}
           </div>
-          <div v-if="item.name !== 'na'"
+          <div v-if="item.name !== 'na' && mode !== 'side'"
           class="border-t-2 border-solid border-[#9b896b] border-opacity-20 w-[100%]"></div>
           <div class="w-[100%] my-3 text-[#9b896b] overflow-clip">
-            {{ item.name !== 'na' ? item.desc.substring(0,150) : '' }}
-            {{ item.desc.length > 150 ? '...' : '' }}
+            {{ item.name !== 'na' && mode !== 'side' ? item.desc.substring(0,150) : '' }}
+            {{ item.desc.length && mode !== 'side' > 150 ? '...' : '' }}
           </div>
           <div v-if="item.name !== 'na' && mode === 'craft'"
           class="flex flex-row w-[100%] justify-start mb-4">

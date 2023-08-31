@@ -1,7 +1,7 @@
 <template>
   <div class="bg-black bg-opacity-30 rounded-2xl w-[100%] h-[50px] mb-[30px] flex flex-row
   items-center px-[10px] space-x-3">
-  <div>
+  <div v-if="isShowing">
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         width="32px" viewBox="0 0 356.572 356.572"
         xml:space="preserve" class="fill-[#ddae62] bg-amber-50 p-[4px] rounded-lg">
@@ -25,8 +25,8 @@
         </g>
     </svg>
   </div>
-  <div class="text-amber-50">Craft</div>
-  <div class="-scale-x-100">
+  <div v-if="isShowing" class="text-amber-50">Craft</div>
+  <div v-if="isShowing" class="-scale-x-100">
     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         width="32px" viewBox="0 0 356.572 356.572"
         xml:space="preserve" class="fill-[#ddae62] bg-amber-50 p-[4px] rounded-lg">
@@ -50,20 +50,26 @@
         </g>
     </svg>
   </div>
-  <div class="text-[#ddae62]">Hold</div>
-  <div class="text-amber-50">Craft More</div>
-  <div class="bg-amber-50 w-[32px] h-[32px] p-[4px] rounded-lg flex
-  justify-center items-center text-[#ddae62]">E</div>
-  <div class="text-amber-50">Pin</div>
-  <div class="bg-amber-50 w-[32px] h-[32px] p-[4px] rounded-lg text-base flex
+  <div v-if="isShowing" class="text-[#ddae62]">Hold</div>
+  <div v-if="isShowing" class="text-amber-50">Craft More</div>
+  <div v-if="isShowing" class="bg-amber-50 w-[32px] h-[32px] p-[4px] rounded-lg flex
+  justify-center items-center text-[#ddae62]">F</div>
+  <div v-if="isShowing" class="text-amber-50">Pin</div>
+  <div v-if="isShowing" class="bg-amber-50 w-[32px] h-[32px] p-[4px] rounded-lg text-base flex
   justify-center items-center text-[#ddae62]">esc</div>
-  <div class="text-amber-50">Back</div>
+  <div v-if="isShowing" class="text-amber-50">Back</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'CtrlBoard',
+  props: { select: Array, item: Object },
+  computed: {
+    isShowing() {
+      return this.select[0] === 'craft' && this.item.name !== 'na';
+    },
+  },
 };
 </script>
 
