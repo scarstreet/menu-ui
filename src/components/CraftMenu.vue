@@ -3,10 +3,11 @@
 <!-- eslint-disable import/no-dynamic-require -->
 <!-- eslint-disable global-require -->
 <template>
-  <div class="w-[100%] h-[37.5925vh] overflow-y-scroll overflow-x-hidden grid-cont"
+  <div class="w-max-[50vw] h-[37.5925vh] overflow-y-scroll overflow-x-hidden grid-cont"
   ref="craftGrid" id="craftGrid">
-    <div class="the-grid h-[53.7963vh]">
+    <div class=" the-grid h-[53.7963vh] text-center">
       <button v-for="(i, idx) in cCrafts" :key="'craftable' + idx" :class="`grid-object group
+      self-center text-center
       ${i.selected ? 'selected ' : ' '}`"
       @click="changeSelect(['craft',idx])"
       :ref="'craftChild'+idx">
@@ -219,10 +220,10 @@ export default {
 
 <style scoped>
 .the-grid {
-  @apply grid grid-flow-row-dense grid-cols-8 gap-1 pr-[1.04vw];
+  @apply grid grid-flow-row-dense grid-cols-8 grid-rows-5 gap-1 pr-[1.04vw];
 }
 .grid-object {
-  @apply col-span-1 aspect-square h-[10vh] justify-center items-center;
+  @apply col-span-1 h-[10vh] justify-center items-center;
   overflow: hidden;
 }
 .grid-object.selected {

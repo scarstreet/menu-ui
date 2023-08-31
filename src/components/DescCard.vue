@@ -3,7 +3,7 @@
         flex flex-col p-[3.125vw] pb-[2.77vh] items-center">
           <img :src="item.name !== 'na' && mode !== 'side' ?
           item.image : require('@/assets/w1.png')"
-          class="w-[10.42vw] h-[10.42vw] object-contain" alt="" />
+          class="w-[10.42vh] h-[10.42vh] object-contain" alt="" />
           <div class="w-[100%] text-2xl text-amber-950 first-letter:capitalize">
             {{ item.name !== 'na' && mode !== 'side' ?  item.name : ''}}
           </div>

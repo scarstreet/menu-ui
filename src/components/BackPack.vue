@@ -97,10 +97,10 @@ export default {
 
 <style scoped>
 .the-grid {
-  @apply grid grid-flow-row-dense grid-cols-10 gap-2 overflow-y-hidden pr-[1.04vw];
+  @apply grid grid-flow-row-dense grid-cols-10 grid-rows-4 gap-2 overflow-y-hidden pr-[1.04vw];
 }
 .grid-object {
-  @apply bg-white col-span-1 aspect-square rounded-2xl bg-opacity-10;
+  @apply bg-white col-span-1 py-[1em] rounded-2xl bg-opacity-10;
 }
 .grid-object.item {
   @apply bg-opacity-50;
@@ -110,6 +110,6 @@ export default {
   @apply border-8 border-solid border-white;
 }
 .grid-object.locked {
-  @apply rounded-full scale-[.30];
+  @apply rounded-full aspect-square scale-[.20];
 }
 </style>

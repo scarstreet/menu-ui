@@ -580,20 +580,6 @@ export default {
       },
       {
         // eslint-disable-next-line global-require
-        image: require('@/assets/26.png'),
-        name: 'Emberleaf Fern',
-        categ: 'Plants',
-        selected: false,
-        pinned: false,
-        rewards: { cube: 0, hammer: 10 },
-        req: [
-          { item: 'Golden Apple', amount: 4 },
-          { item: 'Pumpkin', amount: 20 },
-        ],
-        desc: "The Emberleaf Fern is a hardy plant found in the hottest regions of the world. Its fronds are adorned with fiery red edges, and when carefully harvested, they can be infused into armor and weapons, granting them a temporary resistance to fire-based attacks. Warriors and adventurers often seek out this plant to forge equipment that's well-suited for battling fire-breathing foes.",
-      },
-      {
-        // eslint-disable-next-line global-require
         image: require('@/assets/spell-scroll.svg'),
         name: "Scribe's Scroll of Knowledge",
         categ: 'Scrolls',
@@ -619,21 +605,6 @@ export default {
           { item: 'Golden Apple', amount: 3 },
         ],
         desc: 'The elusive Starlight Blossom is a radiant flower that only blooms under the light of a full moon. Its petals shimmer with a soft, ethereal glow, and when harvested, they can be used as a key ingredient in crafting potent potions that enhance magical abilities.',
-      },
-      {
-        // eslint-disable-next-line global-require
-        image: require('@/assets/11.png'),
-        name: 'Healing Herb Salve',
-        categ: 'Tonics',
-        selected: false,
-        pinned: false,
-        rewards: { cube: 10, hammer: 3 },
-        req: [
-          { item: 'Golden Apple', amount: 5 },
-          { item: 'Peas', amount: 16 },
-          { item: 'Carrot', amount: 12 },
-        ],
-        desc: 'This soothing salve is crafted from common herbs. When applied, it accelerates natural healing processes, restoring a portion of health over time.',
       },
       {
         // eslint-disable-next-line global-require
@@ -673,20 +644,6 @@ export default {
         rewards: { cube: 4, hammer: 20 },
         req: [{ item: 'Golden Apple', amount: 100 }],
         desc: 'Distilled from the nectar of ancient plants, this tonic revitalizes the body and mind. It temporarily boosts strength, agility, and focus, making it a favored choice among adventurers facing formidable challenges.',
-      },
-      {
-        // eslint-disable-next-line global-require
-        image: require('@/assets/9.png'),
-        name: 'Arcane Reading Chair',
-        categ: 'Furniture',
-        selected: false,
-        pinned: false,
-        rewards: { cube: 5, hammer: 10 },
-        req: [
-          { item: 'Golden Apple', amount: 50 },
-          { item: 'Wood', amount: 120 },
-        ],
-        desc: 'This meticulously crafted chair is designed for scholars and magic users. Its enchantments provide comfort during long study sessions and grant a clearer connection to magical energies, enhancing the speed of spell research.',
       },
       {
         // eslint-disable-next-line global-require
