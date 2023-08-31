@@ -43,7 +43,8 @@
         <div class="flex-1 h-[486px] pt-[50px] pl-[40px] pr-[20px]">
           <CraftMenu :backpack="inventory" :mode="activeSide" :select="selected"
           @set-craft="setCraftSelect" :craftable="craftable"
-          @change-select="changeSelect"/>
+          @change-select="changeSelect"
+          @craft-pls="craftItem()"/>
         </div>
         <div class="flex-1">
           <BackPack :inventory="inventory" :select="selected" @set-backpack="setCraftSelect"
