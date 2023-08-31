@@ -730,7 +730,7 @@ export default {
   flex pl-[3.13vw] pt-[4.63vh] pr-[1.56vw];
 }
 .crafting {
-  @apply h-[90vh] w-auto flex-col flex;
+  @apply h-[90vh] w-auto grow flex-col flex;
 }
 .desc {
   @apply h-auto w-[26.04vw] flex-col flex mr-[1.56vw];
