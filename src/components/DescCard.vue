@@ -82,7 +82,6 @@ export default {
           (x) => x.name === mat[i].item,
         )].image;
       }
-      console.log(mat);
       return mat;
     },
   },

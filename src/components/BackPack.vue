@@ -59,7 +59,6 @@ export default {
     cInventory() {
       let inv = this.inventory;
       inv = inv.filter((x) => x.amount > 0);
-      console.log('INVENTORY UPDATE = ', this.inventory.length, ' ITEMS');
       let i = inv.length;
       for (i; i < this.space - this.locked; i += 1) {
         inv.push({

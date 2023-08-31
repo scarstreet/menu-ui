@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="content z-10">
+    <div v-if="activeTop === 'Crafting'" class="content z-10">
       <div class="side-bar">
         <SideButton v-for="btn in cSideBtns" :key="btn.label"
         :label="btn.label" :icon="btn.icon" :isActive="btn.isActive"  @change-side="changeSide" />
@@ -52,12 +52,17 @@
         <CtrlBoard :select="selected" :item="currentItem" :canCraft="isCanCraft()" />
       </div>
     </div>
+    <div v-else class="w-[100vw] h-[90vh] grow flex
+    items-center justify-center z-10 bg-black text-2xl text-amber-50 bg-opacity-60">
+      {{ activeTop }} is still under construction...
+    </div>
     <div class="background overflow-hidden"></div>
-    <div class="fixed w-[100vw] flex flex-col justify-center
-    items-center text-amber-50 bottom-[40px]">
+    <div v-if="isSpaceHold" class="fixed w-[100vw] z-20 flex flex-col justify-center
+    items-center text-amber-50 bottom-[40px]
+    drop-shadow-[0_0_30px_rgba(0,0,0,1)]">
       Crafting
       <div class="w-[50vw] h-[30px] flex flex-col bg-amber-50
-    border-4 border-[#e6d1ac] z-10 rounded-2xl
+    border-4 border-[#e6d1ac] rounded-2xl
     overflow-hidden items-start justify-start">
         <div class="h-[30px] bg-[#ddae62]" ref="progress"></div>
       </div>
@@ -118,21 +123,25 @@ export default {
       } else {
         temp[temp.findIndex((x) => x.name === this.currentItem.name)].amount += 1;
       }
-      // temp = temp.filter((x) => x.amount > 0);
       this.inventory = temp;
-      console.log('KREFTING TIMEEE');
     },
     longCraftItem() {
-      let progress = 0;
-      this.craftOneTimeout = setTimeout(() => {
-        progress += 1;
-        const { bar } = this.$refs;
-        bar.style.width = `${progress}%`;
-        if (progress === 100) {
+      this.longProgress += 0.3;
+      const bar = this.$refs.progress;
+      if (bar !== undefined) {
+        bar.style.width = `${this.longProgress}%`;
+        if (this.longProgress >= 100) {
           this.craftItem();
-          progress = 0;
+          this.longProgress = 0;
+          if (!this.isCanCraft()) {
+            clearTimeout(this.craftOneTimeout);
+            clearTimeout(this.longPressTimeout);
+            this.isSpaceHold = false;
+            return;
+          }
         }
-      }, 30);
+      }
+      this.craftOneTimeout = setTimeout(this.longCraftItem, 1);
     },
     changeSide(i) {
       this.activeSide = i;
@@ -238,60 +247,66 @@ export default {
   },
   created() {
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 's') {
-        if (this.selected[0] === 'side') {
-          this.navSide('y', 1);
+      if (this.activeTop === 'Crafting') {
+        if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(event.code) > -1) {
+          event.preventDefault();
         }
-        if (this.selected[0] === 'craft') {
-          this.navCraft('y', 1);
+        if (event.key === 'ArrowDown' || event.key === 's') {
+          if (this.selected[0] === 'side') {
+            this.navSide('y', 1);
+          }
+          if (this.selected[0] === 'craft') {
+            this.navCraft('y', 1);
+          }
+          if (this.selected[0] === 'backpack') {
+            this.navBackpack('y', 1);
+          }
         }
-        if (this.selected[0] === 'backpack') {
-          this.navBackpack('y', 1);
+        if (event.key === 'ArrowUp' || event.key === 'w') {
+          if (this.selected[0] === 'side') {
+            this.navSide('y', -1);
+          }
+          if (this.selected[0] === 'craft') {
+            this.navCraft('y', -1);
+          }
+          if (this.selected[0] === 'backpack') {
+            this.navBackpack('y', -1);
+          }
         }
-      }
-      if (event.key === 'ArrowUp' || event.key === 'w') {
-        if (this.selected[0] === 'side') {
-          this.navSide('y', -1);
+        if (event.key === 'ArrowLeft' || event.key === 'a') {
+          if (this.selected[0] === 'craft') {
+            this.navCraft('x', -1);
+          }
+          if (this.selected[0] === 'backpack') {
+            this.navBackpack('x', -1);
+          }
         }
-        if (this.selected[0] === 'craft') {
-          this.navCraft('y', -1);
+        if (event.key === 'ArrowRight' || event.key === 'd') {
+          if (this.selected[0] === 'side') {
+            this.navSide('x', 1);
+          }
+          if (this.selected[0] === 'craft') {
+            this.navCraft('x', 1);
+          }
+          if (this.selected[0] === 'backpack') {
+            this.navBackpack('x', 1);
+          }
         }
-        if (this.selected[0] === 'backpack') {
-          this.navBackpack('y', -1);
+        if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
+          const temp = this.craftable;
+          temp[this.selected[1]].pinned = !temp[this.selected[1]].pinned;
+          this.craftable = temp;
         }
-      }
-      if (event.key === 'ArrowLeft' || event.key === 'a') {
-        if (this.selected[0] === 'craft') {
-          this.navCraft('x', -1);
-        }
-        if (this.selected[0] === 'backpack') {
-          this.navBackpack('x', -1);
-        }
-      }
-      if (event.key === 'ArrowRight' || event.key === 'd') {
-        if (this.selected[0] === 'side') {
-          this.navSide('x', 1);
-        }
-        if (this.selected[0] === 'craft') {
-          this.navCraft('x', 1);
-        }
-        if (this.selected[0] === 'backpack') {
-          this.navBackpack('x', 1);
-        }
-      }
-      if (event.key === 'f' && this.selected[0] === 'craft' && this.currentItem.name !== 'na') {
-        const temp = this.craftable;
-        temp[this.selected[1]].pinned = !temp[this.selected[1]].pinned;
-        this.craftable = temp;
-      }
-      if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold === false) {
-        this.longPressTimeout = setTimeout(() => {
-          if (!this.isSpaceHold) {
+        if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
+          this.longPressTimeout = setTimeout(() => {
             this.isSpaceHold = true;
             this.longCraftItem();
-          }
-          console.log('LONG CRAFTTTTTTTTTT');
-        }, 3000);
+            console.log('LONG CRAFTTTTTTTTTT');
+          }, 500);
+        }
+        if (event.key === 'Escape' && this.selected[0] === 'craft') {
+          this.selected = ['side', this.sideBtns.findIndex((x)=>x.label === this.activeSide)];
+        }
       }
       if (event.key === 'q') {
         this.navTop(-1);
@@ -299,23 +314,23 @@ export default {
       if (event.key === 'e') {
         this.navTop(1);
       }
-      // console.log(this.selected);
     });
-    document.addEventListener('keyup', (event) => {
-      if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
-        // Normal crafting
-        this.craftItem();
-        clearTimeout(this.longPressTimeout);
-        clearTimeout(this.craftOneTimeout);
-      }
-      if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold) {
-        // Stop hold crafting
-        this.isSpaceHold = false;
-        this.craftItem();
-        clearTimeout(this.longPressTimeout);
-        clearTimeout(this.craftOneTimeout);
-      }
-    });
+    if (this.activeTop === 'Crafting') {
+      document.addEventListener('keyup', (event) => {
+        if (event.key === ' ' && this.isCanCraft() && !this.isSpaceHold) {
+          // Normal crafting
+          this.craftItem();
+          clearTimeout(this.longPressTimeout);
+          clearTimeout(this.craftOneTimeout);
+        }
+        if (event.key === ' ' && this.isCanCraft() && this.isSpaceHold) {
+          // Stop hold crafting
+          this.isSpaceHold = false;
+          clearTimeout(this.craftOneTimeout);
+          clearTimeout(this.longPressTimeout);
+        }
+      });
+    }
   },
   data: () => ({
     selected: ['side', 0],
@@ -324,6 +339,7 @@ export default {
     activeTopId: 3,
     isSpaceHold: false,
     spaceStart: '',
+    longProgress: 0,
     currentItem: {
       // eslint-disable-next-line global-require
       name: 'na', image: require('@/assets/w1.png'), pinned: false, req: [], desc: '', selected: false,
